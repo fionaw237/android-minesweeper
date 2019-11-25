@@ -10,6 +10,7 @@ import androidx.navigation.findNavController
 import com.example.android_minesweeper.Difficulty
 import com.example.android_minesweeper.R
 import com.example.android_minesweeper.databinding.WelcomeScreenBinding
+import kotlinx.android.synthetic.main.welcome_screen.*
 
 class WelcomeScreenFragment : Fragment() {
 
@@ -18,24 +19,18 @@ class WelcomeScreenFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater,
             R.layout.welcome_screen, container, false)
-
-        binding.beginnerButton.setOnClickListener {
-            view?.findNavController()?.navigate(WelcomeScreenFragmentDirections.actionWelcomeScreenFragmentToGameScreenFragment(Difficulty.BEGINNER))
-        }
-
-        binding.intermediateButton.setOnClickListener {
-            view?.findNavController()?.navigate(WelcomeScreenFragmentDirections.actionWelcomeScreenFragmentToGameScreenFragment(Difficulty.INTERMEDIATE))
-        }
-
-        binding.advancedButton.setOnClickListener {
-            view?.findNavController()?.navigate(WelcomeScreenFragmentDirections.actionWelcomeScreenFragmentToGameScreenFragment(Difficulty.ADVANCED))
-        }
-
+        binding.fragment = this
         binding.bestTimesButton.setOnClickListener {
             view?.findNavController()?.navigate(WelcomeScreenFragmentDirections.actionWelcomeScreenFragmentToBestTimesFragment())
         }
 
         return binding.root
+    }
+
+    fun difficultySelected(difficulty: Difficulty) {
+        view?.findNavController()?.navigate(
+            WelcomeScreenFragmentDirections.actionWelcomeScreenFragmentToGameScreenFragment(difficulty)
+        )
     }
 
 
