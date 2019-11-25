@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/welcomeScreenFragment">
+
+    <fragment
+        android:id="@+id/welcomeScreenFragment"
+        android:name="com.example.android_minesweeper.WelcomeScreenFragment"
+        android:label="WelcomeScreenFragment"
+        tools:layout="@layout/welcome_screen">
+        <action
+            android:id="@+id/action_welcomeScreenFragment_to_gameScreenFragment"
+            app:destination="@id/gameScreenFragment" />
+        <action
+            android:id="@+id/action_welcomeScreenFragment_to_bestTimesFragment"
+            app:destination="@id/bestTimesFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/gameScreenFragment"
+        android:name="com.example.android_minesweeper.GameScreenFragment"
+        android:label="GameScreenFragment"
+        tools:layout="@layout/game_screen">
+        <action
+            android:id="@+id/action_gameScreenFragment_to_bestTimesFragment"
+            app:destination="@id/bestTimesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bestTimesFragment"
+        android:name="com.example.android_minesweeper.BestTimesFragment"
+        android:label="BestTimesFragment"
+        tools:layout="@layout/best_times_screen"/>
+</navigation>

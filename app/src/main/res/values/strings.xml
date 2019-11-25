@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Android_Minesweeper</string>
+    <string name="app_name">Minesweeper</string>
     <string name="position">Position</string>
     <string name="name">Name</string>
     <string name="time">Time</string>
