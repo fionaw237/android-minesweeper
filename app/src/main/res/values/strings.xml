@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Android_Minesweeper</string>
+    <string name="position">Position</string>
+    <string name="name">Name</string>
+    <string name="time">Time</string>
+    <string name="best_times">Best Times</string>
+    <string name="reset_all">Reset All</string>
+    <string name="welcome_message">Welcome to Minesweeper!</string>
+    <string name="difficulty_message">Select a difficulty:</string>
+    <string name="beginner">Beginner</string>
+    <string name="intermediate">Intermediate</string>
+    <string name="advanced">Advanced</string>
+</resources>
