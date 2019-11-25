@@ -28,7 +28,7 @@
             app:destination="@id/bestTimesFragment" />
         <argument
             android:name="difficulty"
-            app:argType="integer" />
+            app:argType="com.example.android_minesweeper.Difficulty" />
     </fragment>
     <fragment
         android:id="@+id/bestTimesFragment"

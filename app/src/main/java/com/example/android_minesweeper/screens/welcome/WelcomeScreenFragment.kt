@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import com.example.android_minesweeper.Difficulty
 import com.example.android_minesweeper.R
 import com.example.android_minesweeper.databinding.WelcomeScreenBinding
 
@@ -19,15 +20,15 @@ class WelcomeScreenFragment : Fragment() {
             R.layout.welcome_screen, container, false)
 
         binding.beginnerButton.setOnClickListener {
-            view?.findNavController()?.navigate(WelcomeScreenFragmentDirections.actionWelcomeScreenFragmentToGameScreenFragment(0))
+            view?.findNavController()?.navigate(WelcomeScreenFragmentDirections.actionWelcomeScreenFragmentToGameScreenFragment(Difficulty.BEGINNER))
         }
 
         binding.intermediateButton.setOnClickListener {
-            view?.findNavController()?.navigate(WelcomeScreenFragmentDirections.actionWelcomeScreenFragmentToGameScreenFragment(1))
+            view?.findNavController()?.navigate(WelcomeScreenFragmentDirections.actionWelcomeScreenFragmentToGameScreenFragment(Difficulty.INTERMEDIATE))
         }
 
         binding.advancedButton.setOnClickListener {
-            view?.findNavController()?.navigate(WelcomeScreenFragmentDirections.actionWelcomeScreenFragmentToGameScreenFragment(2))
+            view?.findNavController()?.navigate(WelcomeScreenFragmentDirections.actionWelcomeScreenFragmentToGameScreenFragment(Difficulty.ADVANCED))
         }
 
         binding.bestTimesButton.setOnClickListener {
