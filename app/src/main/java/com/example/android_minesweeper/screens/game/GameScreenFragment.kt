@@ -20,6 +20,8 @@ class GameScreenFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.game_screen, container, false)
         viewModelFactory = GameViewModelFactory(GameScreenFragmentArgs.fromBundle(arguments!!).difficulty)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(GameViewModel::class.java)
+        binding.gameViewModel = viewModel
+        binding.lifecycleOwner = this
         return binding.root
     }
 }

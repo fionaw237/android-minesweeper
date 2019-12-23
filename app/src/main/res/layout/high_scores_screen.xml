@@ -3,7 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="highScoresViewModel"
+            type="com.example.android_minesweeper.screens.best_times.HighScoresViewModel" />
+        <import type="com.example.android_minesweeper.Difficulty"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -68,6 +71,33 @@
             app:layout_constraintTop_toBottomOf="@id/reset_times_button"
             app:layout_constraintStart_toStartOf="@id/left_mine_image"
             app:layout_constraintEnd_toEndOf="@id/right_mine_image"/>
+
+        <Button
+            android:id="@+id/test_beginner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Beginner"
+            android:onClick="@{() -> highScoresViewModel.difficultyChosenToDisplay(Difficulty.BEGINNER)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <Button
+            android:id="@+id/test_intermediate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Intermediate"
+            android:onClick="@{() -> highScoresViewModel.difficultyChosenToDisplay(Difficulty.INTERMEDIATE)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/test_beginner"/>
+
+        <Button
+            android:id="@+id/test_advanced"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Intermediate"
+            android:onClick="@{() -> highScoresViewModel.difficultyChosenToDisplay(Difficulty.ADVANCED)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/test_intermediate"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/best_times_header"
