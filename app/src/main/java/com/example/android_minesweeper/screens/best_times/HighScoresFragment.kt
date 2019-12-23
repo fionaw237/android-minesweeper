@@ -1,15 +1,19 @@
 package com.example.android_minesweeper.screens.best_times
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.android_minesweeper.R
 import com.example.android_minesweeper.database.AppDatabase
 import com.example.android_minesweeper.databinding.HighScoresScreenBinding
+import com.example.android_minesweeper.getDifficultyEnum
 
 class HighScoresFragment : Fragment() {
 
@@ -19,11 +23,39 @@ class HighScoresFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.high_scores_screen, container, false)
+        setUpDifficultySpinner()
+
+        binding.difficultySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                parent?.getItemAtPosition(position)?.toString()?.getDifficultyEnum()?.let { difficulty ->
+                    viewModel.difficultyChosenToDisplay(difficulty)
+                }
+            }
+
+        }
+
         val dataSource = AppDatabase.getInstance(requireNotNull(this.activity).application).highScoreDao
         viewModelFactory = HighScoresViewModelFactory(dataSource)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(HighScoresViewModel::class.java)
         binding.highScoresViewModel = viewModel
         binding.lifecycleOwner = this
         return binding.root
+    }
+
+    private fun setUpDifficultySpinner() {
+        context?.let { context ->
+            ArrayAdapter.createFromResource(
+                context,
+                R.array.difficulties,
+                android.R.layout.simple_spinner_item
+            ).also { adapter ->
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                binding.difficultySpinner.adapter = adapter
+            }
+        }
     }
 }
