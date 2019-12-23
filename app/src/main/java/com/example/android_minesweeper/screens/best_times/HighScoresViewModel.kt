@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import com.example.android_minesweeper.Difficulty
 import com.example.android_minesweeper.database.HighScore
 import com.example.android_minesweeper.database.HighScoreDao
-import com.example.android_minesweeper.getDifficultyString
 import kotlinx.coroutines.*
 
 class HighScoresViewModel(private val highScoreDao: HighScoreDao) : ViewModel() {
@@ -24,7 +23,7 @@ class HighScoresViewModel(private val highScoreDao: HighScoreDao) : ViewModel() 
 
     private suspend fun getScoresFromDatabase(difficulty: Difficulty): List<HighScore> {
         return withContext(Dispatchers.IO) {
-            highScoreDao.getByDifficulty(difficulty = difficulty.getDifficultyString())
+            highScoreDao.getByDifficulty(difficulty = difficulty.value)
         }
     }
 
