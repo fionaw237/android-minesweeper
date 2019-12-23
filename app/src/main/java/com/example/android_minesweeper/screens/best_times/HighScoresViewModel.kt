@@ -27,6 +27,18 @@ class HighScoresViewModel(private val highScoreDao: HighScoreDao) : ViewModel() 
         }
     }
 
+    fun clearButtonPressed() {
+        uiScope.launch {
+            clearScores()
+        }
+    }
+
+    private suspend fun clearScores() {
+        withContext(Dispatchers.IO) {
+            highScoreDao.clear()
+        }
+    }
+
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
