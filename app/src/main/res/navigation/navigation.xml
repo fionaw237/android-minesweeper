@@ -15,7 +15,7 @@
             app:destination="@id/gameScreenFragment" />
         <action
             android:id="@+id/action_welcomeScreenFragment_to_bestTimesFragment"
-            app:destination="@id/bestTimesFragment" />
+            app:destination="@+id/bestTimesFragment" />
     </fragment>
 
     <fragment
@@ -32,7 +32,7 @@
     </fragment>
     <fragment
         android:id="@+id/bestTimesFragment"
-        android:name="com.example.android_minesweeper.screens.best_times.BestTimesFragment"
+        android:name="com.example.android_minesweeper.screens.best_times.HighScoresFragment"
         android:label="BestTimesFragment"
-        tools:layout="@layout/best_times_screen"/>
+        tools:layout="@layout/high_scores_screen"/>
 </navigation>

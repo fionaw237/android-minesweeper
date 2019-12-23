@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-<!--        <variable-->
-<!--            name="viewModel"-->
-<!--            type="com.example.minesweeper_android.MainViewModel" />-->
+        <variable
+            name="gameViewModel"
+            type="com.example.android_minesweeper.screens.game.GameViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
