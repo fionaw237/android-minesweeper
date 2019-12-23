@@ -7,6 +7,11 @@
         <variable
             name="fragment"
             type="com.example.android_minesweeper.screens.welcome.WelcomeScreenFragment" />
+
+        <variable
+            name="welcomeScreenViewModel"
+            type="com.example.android_minesweeper.screens.welcome.WelcomeScreenViewModel" />
+
         <import type="com.example.android_minesweeper.Difficulty"/>
     </data>
 
