@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-<!--        <variable-->
-<!--            name="viewModel"-->
-<!--            type="com.example.minesweeper_android.MainViewModel" />-->
-
-<!--        <import type="com.example.minesweeper_android.Difficulty" />-->
-
+        <variable
+            name="fragment"
+            type="com.example.android_minesweeper.screens.welcome.WelcomeScreenFragment" />
+        <import type="com.example.android_minesweeper.Difficulty"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -68,12 +65,10 @@
                 android:text="@string/beginner"
                 android:textSize="20sp"
                 android:textAllCaps="false"
+                android:onClick="@{() -> fragment.difficultySelected(Difficulty.BEGINNER)}"
                 app:layout_constraintEnd_toEndOf="@id/intermediate_button"
                 app:layout_constraintStart_toStartOf="@id/intermediate_button"
                 app:layout_constraintTop_toTopOf="parent" />
-
-<!--            android:onClick="@{() -> viewModel.difficultySelected(Difficulty.BEGINNER)}"-->
-
 
             <Button
                 android:id="@+id/intermediate_button"
@@ -85,12 +80,10 @@
                 android:text="@string/intermediate"
                 android:textSize="20sp"
                 android:textAllCaps="false"
+                android:onClick="@{() -> fragment.difficultySelected(Difficulty.INTERMEDIATE)}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/beginner_button" />
-
-<!--            android:onClick="@{() -> viewModel.difficultySelected(Difficulty.INTERMEDIATE)}"-->
-
 
             <Button
                 android:id="@+id/advanced_button"
@@ -100,12 +93,10 @@
                 android:text="@string/advanced"
                 android:textSize="20sp"
                 android:textAllCaps="false"
+                android:onClick="@{() -> fragment.difficultySelected(Difficulty.ADVANCED)}"
                 app:layout_constraintEnd_toEndOf="@id/intermediate_button"
                 app:layout_constraintStart_toStartOf="@id/intermediate_button"
                 app:layout_constraintTop_toBottomOf="@id/intermediate_button" />
-
-<!--            android:onClick="@{() -> viewModel.difficultySelected(Difficulty.ADVANCED)}"-->
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
