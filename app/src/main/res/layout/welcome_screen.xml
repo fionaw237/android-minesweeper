@@ -5,10 +5,6 @@
 
     <data>
         <variable
-            name="fragment"
-            type="com.example.android_minesweeper.screens.welcome.WelcomeScreenFragment" />
-
-        <variable
             name="welcomeScreenViewModel"
             type="com.example.android_minesweeper.screens.welcome.WelcomeScreenViewModel" />
 
@@ -70,7 +66,7 @@
                 android:text="@string/beginner"
                 android:textSize="20sp"
                 android:textAllCaps="false"
-                android:onClick="@{() -> fragment.difficultySelected(Difficulty.BEGINNER)}"
+                android:onClick="@{() -> welcomeScreenViewModel.difficultySelected(Difficulty.BEGINNER)}"
                 app:layout_constraintEnd_toEndOf="@id/intermediate_button"
                 app:layout_constraintStart_toStartOf="@id/intermediate_button"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -85,7 +81,7 @@
                 android:text="@string/intermediate"
                 android:textSize="20sp"
                 android:textAllCaps="false"
-                android:onClick="@{() -> fragment.difficultySelected(Difficulty.INTERMEDIATE)}"
+                android:onClick="@{() -> welcomeScreenViewModel.difficultySelected(Difficulty.INTERMEDIATE)}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/beginner_button" />
@@ -98,7 +94,7 @@
                 android:text="@string/advanced"
                 android:textSize="20sp"
                 android:textAllCaps="false"
-                android:onClick="@{() -> fragment.difficultySelected(Difficulty.ADVANCED)}"
+                android:onClick="@{() -> welcomeScreenViewModel.difficultySelected(Difficulty.ADVANCED)}"
                 app:layout_constraintEnd_toEndOf="@id/intermediate_button"
                 app:layout_constraintStart_toStartOf="@id/intermediate_button"
                 app:layout_constraintTop_toBottomOf="@id/intermediate_button" />
@@ -118,16 +114,14 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                android:text="@string/best_times"
+                android:text="@string/high_scores"
                 android:textSize="16sp"
                 android:textAllCaps="false"
+                android:onClick="@{() -> welcomeScreenViewModel.highScoresButtonPressed()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-<!--            android:onClick="@{() -> viewModel.bestTimesButtonPressed()}"-->
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
