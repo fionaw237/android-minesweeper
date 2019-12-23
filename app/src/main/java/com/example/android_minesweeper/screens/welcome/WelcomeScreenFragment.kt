@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.android_minesweeper.R
+import com.example.android_minesweeper.UILiveDataResponse
 import com.example.android_minesweeper.databinding.WelcomeScreenBinding
 
 class WelcomeScreenFragment : Fragment() {
@@ -24,17 +25,15 @@ class WelcomeScreenFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(WelcomeScreenViewModel::class.java)
         binding.welcomeScreenViewModel = viewModel
 
-        viewModel.navigateToHighScores.observe(this, Observer { response ->
-            if (response != null) {
-                this.findNavController().navigate(WelcomeScreenFragmentDirections.actionWelcomeScreenFragmentToBestTimesFragment())
-                viewModel.doneNavigatingToHighScores()
-            }
-        })
-
-        viewModel.navigateToGameScreen.observe(this, Observer { response ->
-            response?.let { difficulty ->
-                this.findNavController().navigate(WelcomeScreenFragmentDirections.actionWelcomeScreenFragmentToGameScreenFragment(difficulty))
-                viewModel.doneNavigatingToGameScreen()
+        viewModel.responseLiveData.observe(this, Observer { response ->
+            response?.let { result ->
+                this.findNavController().navigate(
+                    when (result) {
+                        is UILiveDataResponse.NavigateToHighScores -> WelcomeScreenFragmentDirections.actionWelcomeScreenFragmentToBestTimesFragment()
+                        is UILiveDataResponse.NavigateToGameScreen -> WelcomeScreenFragmentDirections.actionWelcomeScreenFragmentToGameScreenFragment(result.difficulty)
+                    }
+                )
+                viewModel.doneNavigating()
             }
         })
 

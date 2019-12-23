@@ -1,34 +1,23 @@
 package com.example.android_minesweeper.screens.welcome
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.android_minesweeper.Difficulty
+import com.example.android_minesweeper.UILiveDataResponse
 
 class WelcomeScreenViewModel : ViewModel() {
 
-    private val _navigateToHighScores = MutableLiveData<Difficulty>()
-    private val _navigateToGameScreen = MutableLiveData<Difficulty>()
+    var responseLiveData = MutableLiveData<UILiveDataResponse>()
 
-    val navigateToHighScores: LiveData<Difficulty>
-    get() = _navigateToHighScores
-
-    val navigateToGameScreen: LiveData<Difficulty>
-    get() = _navigateToGameScreen
-
-    fun doneNavigatingToHighScores() {
-        _navigateToHighScores.value = null
-    }
-
-    fun doneNavigatingToGameScreen() {
-        _navigateToGameScreen.value = null
+    fun doneNavigating() {
+       responseLiveData.value = null
     }
 
     fun highScoresButtonPressed() {
-        _navigateToHighScores.value = Difficulty.BEGINNER
+        responseLiveData.value = UILiveDataResponse.NavigateToHighScores
     }
 
     fun difficultySelected(difficulty: Difficulty) {
-        _navigateToGameScreen.value = difficulty
+        responseLiveData.value = UILiveDataResponse.NavigateToGameScreen(difficulty)
     }
 }
