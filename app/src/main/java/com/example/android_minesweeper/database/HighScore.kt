@@ -16,5 +16,5 @@ data class HighScore(
     var name: String = "",
 
     @ColumnInfo(name = "time")
-    var time: Int = 0
+    var time: String = "0"
 )

@@ -1,10 +1,10 @@
 package com.example.android_minesweeper.screens.game
 
 import android.util.Log
-import androidx.lifecycle.ViewModel
 import com.example.android_minesweeper.Difficulty
+import com.example.android_minesweeper.screens.BaseViewModel
 
-class GameViewModel(private val difficulty: Difficulty) : ViewModel() {
+class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
 
     var numberOfMines: Int = 0
     val numberOfColumns = 6
