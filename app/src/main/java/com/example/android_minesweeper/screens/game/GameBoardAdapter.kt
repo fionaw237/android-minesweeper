@@ -1,8 +1,10 @@
 package com.example.android_minesweeper.screens.game
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.GridLayout
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android_minesweeper.R
@@ -14,13 +16,24 @@ class GameBoardAdapter(val gameViewModel: GameViewModel) : RecyclerView.Adapter<
     var data = listOf<GridCell>()
     set(value) {
         field = value
-        notifyDataSetChanged()
+        notifyItemRangeChanged(0, data.size)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GridCellViewHolder {
-        return GridCellViewHolder(
-            DataBindingUtil.inflate<GridCellBinding>(LayoutInflater.from(parent.context), R.layout.grid_cell, parent, false)
-        )
+        DataBindingUtil.inflate<GridCellBinding>(LayoutInflater.from(parent.context), R.layout.grid_cell, parent, false).let { binding ->
+            val size = calculateSizeOfView(parent.context)
+            val margin = 24
+            val layoutParams = GridLayout.LayoutParams(ViewGroup.LayoutParams(size - margin, size - margin))
+            layoutParams.bottomMargin = 4
+            binding.root.layoutParams = layoutParams
+            return GridCellViewHolder(binding)
+        }
+    }
+
+    private fun calculateSizeOfView(context: Context): Int {
+        val displayMetrics = context.resources.displayMetrics
+        val dpWidth = displayMetrics.widthPixels
+        return (dpWidth / gameViewModel.cellsPerRow)
     }
 
     override fun getItemCount() = data.size
@@ -37,4 +50,5 @@ class GameBoardAdapter(val gameViewModel: GameViewModel) : RecyclerView.Adapter<
             this.bind = bind
         }
     }
+
 }

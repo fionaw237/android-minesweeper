@@ -74,8 +74,7 @@
             android:id="@+id/game_grid"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="1:1"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="10dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="40dp"
@@ -84,8 +83,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:gameGrid="@{gameViewModel}"/>
+<!--        app:layout_constraintDimensionRatio="1:1"-->
 
-<!--        app:data="@{viewModel.gridStateModel.cells}"-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

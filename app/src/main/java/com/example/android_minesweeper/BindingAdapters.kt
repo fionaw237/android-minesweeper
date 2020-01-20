@@ -1,7 +1,7 @@
 package com.example.android_minesweeper
 
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android_minesweeper.screens.game.GameBoardAdapter
 import com.example.android_minesweeper.screens.game.GameViewModel
@@ -10,10 +10,7 @@ import com.example.android_minesweeper.screens.game.GameViewModel
 fun setUpGameGrid(recyclerView: RecyclerView, gameViewModel: GameViewModel) {
     if (recyclerView.adapter == null) {
         recyclerView.adapter = GameBoardAdapter(gameViewModel)
-        //        recyclerView.layoutManager = GridLayoutManager(recyclerView.context, viewModel.cellsPerRow)
-        recyclerView.layoutManager = LinearLayoutManager(recyclerView.context).also { layoutManager ->
-            layoutManager.orientation = RecyclerView.VERTICAL
-        }
+        recyclerView.layoutManager = GridLayoutManager(recyclerView.context, gameViewModel.cellsPerRow)
 
         gameViewModel.gridCells.observeForever {
             it?.let {
