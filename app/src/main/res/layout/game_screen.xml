@@ -82,9 +82,9 @@
             app:layout_constraintTop_toBottomOf="@id/header_guideline"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:gameGrid="@{gameViewModel}"/>
 
-<!--        app:gameGrid="@{viewModel}"-->
 <!--        app:data="@{viewModel.gridStateModel.cells}"-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>

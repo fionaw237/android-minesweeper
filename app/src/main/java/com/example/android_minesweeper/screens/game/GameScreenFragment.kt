@@ -22,6 +22,7 @@ class GameScreenFragment : Fragment() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(GameViewModel::class.java)
         binding.gameViewModel = viewModel
         binding.lifecycleOwner = this
+
         return binding.root
     }
 }
