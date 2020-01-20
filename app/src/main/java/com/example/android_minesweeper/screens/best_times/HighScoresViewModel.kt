@@ -24,15 +24,25 @@ class HighScoresViewModel(private val highScoreDao: HighScoreDao) : BaseViewMode
     //  then when a difficulty is chosen from the dropdown, just grab the relevant data from the map
 
     fun difficultyChosenToDisplay(difficulty: Difficulty) {
-//        uiScope.launch {
-//            highScores = getScoresFromDatabase(difficulty)
+        uiScope.launch {
+            highScores = getScoresFromDatabase(difficulty)
+        }
+            //TODO: we shouldnt be assigning an ID when initialising the object - need to write a function to assign a unique ID
+        // between 1 and 10, say (if we're just storing 10 scores).
+        // 1) Determine if high score based on other existing scores
+        // 2) If it is a new high score, assign appropriate ID
+//        listOf(
+//            HighScore(1100, "Intermediate", "Eva", "20s")
+//        ).forEach {
+//            uiScope.launch {
+//                addHighScoreToDatabase(it)
+//            }
+//        }.also {
+//            uiScope.launch {
+//                highScores = getScoresFromDatabase(Difficulty.BEGINNER)
+//            }
 //        }
-        highScores = listOf(
-            HighScore(1, "Beginner", "Eva", "20s"),
-            HighScore(2, "Beginner", "Eva", "22s"),
-            HighScore(3, "Beginner", "Eva", "24s"),
-            HighScore(4, "Beginner", "Eva", "26s")
-        )
+
     }
 
     private suspend fun getScoresFromDatabase(difficulty: Difficulty): List<HighScore> {
@@ -41,9 +51,17 @@ class HighScoresViewModel(private val highScoreDao: HighScoreDao) : BaseViewMode
         }
     }
 
+    private suspend fun addHighScoreToDatabase(highScore: HighScore) {
+        withContext(Dispatchers.IO) {
+            highScoreDao.insert(highScore)
+        }
+    }
+
     fun clearButtonPressed() {
         uiScope.launch {
             clearScores()
+            //TODO: Add repository layer which the view model can observe?
+            highScores = listOf()
         }
     }
 
