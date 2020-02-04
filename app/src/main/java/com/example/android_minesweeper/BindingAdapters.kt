@@ -15,6 +15,7 @@ import com.example.android_minesweeper.screens.best_times.HighScoresViewModel
 
 @BindingAdapter("gameGrid")
 fun setUpGameGrid(recyclerView: RecyclerView, gameViewModel: GameViewModel) {
+    recyclerView.itemAnimator = null
     if (recyclerView.adapter == null) {
         recyclerView.adapter = GameBoardAdapter(gameViewModel)
         recyclerView.layoutManager =
