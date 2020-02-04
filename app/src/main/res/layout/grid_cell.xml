@@ -20,9 +20,14 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        android:background="@drawable/grid_cell_background"
-        android:onClick="@{() -> gameViewModel.gridCellTapped(gridCell)}">
+        android:background="#FFCBCBCB">
 
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_uncovered_button"
+            android:visibility="@{gridCell.uncovered ? View.GONE : View.VISIBLE}"
+            android:onClick="@{() -> gameViewModel.gridCellTapped(gridCell)}"/>
 
         <ImageView
             android:layout_width="40dp"
