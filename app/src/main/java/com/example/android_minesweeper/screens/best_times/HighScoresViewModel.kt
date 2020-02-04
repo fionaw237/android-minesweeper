@@ -20,19 +20,8 @@ class HighScoresViewModel(private val highScoreDao: HighScoreDao) : BaseViewMode
         notifyPropertyChanged(BR.highScores)
     }
 
-    // TODO: Later, store high scores in a map, once the fragment has loaded -
-    //  then when a difficulty is chosen from the dropdown, just grab the relevant data from the map
-
-    fun difficultyChosenToDisplay(difficulty: Difficulty) {
-        uiScope.launch {
-            highScores = getScoresFromDatabase(difficulty)
-        }
-            //TODO: we shouldnt be assigning an ID when initialising the object - need to write a function to assign a unique ID
-        // between 1 and 10, say (if we're just storing 10 scores).
-        // 1) Determine if high score based on other existing scores
-        // 2) If it is a new high score, assign appropriate ID
-//        listOf(
-//            HighScore(1100, "Intermediate", "Eva", "20s")
+    //        listOf(
+//            HighScore(difficulty = "Beginner", name = "Eva", time = "20s")
 //        ).forEach {
 //            uiScope.launch {
 //                addHighScoreToDatabase(it)
@@ -43,6 +32,13 @@ class HighScoresViewModel(private val highScoreDao: HighScoreDao) : BaseViewMode
 //            }
 //        }
 
+    // TODO: Later, store high scores in a map, once the fragment has loaded -
+    //  then when a difficulty is chosen from the dropdown, just grab the relevant data from the map
+
+    fun difficultyChosenToDisplay(difficulty: Difficulty) {
+        uiScope.launch {
+            highScores = getScoresFromDatabase(difficulty)
+        }
     }
 
     private suspend fun getScoresFromDatabase(difficulty: Difficulty): List<HighScore> {

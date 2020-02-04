@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "high_scores")
 data class HighScore(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Int = 0,
 
     @ColumnInfo(name = "difficulty")
     var difficulty: String = "",
