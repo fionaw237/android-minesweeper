@@ -7,8 +7,11 @@ import com.example.android_minesweeper.screens.game.GameBoardAdapter
 import com.example.android_minesweeper.screens.game.GameViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android_minesweeper.database.HighScore
+import com.example.android_minesweeper.models.GridCell
 import com.example.android_minesweeper.screens.best_times.HighScoresAdapter
 import com.example.android_minesweeper.screens.best_times.HighScoresViewModel
+
+// ----- Data binding for game grid -----
 
 @BindingAdapter("gameGrid")
 fun setUpGameGrid(recyclerView: RecyclerView, gameViewModel: GameViewModel) {
@@ -16,14 +19,15 @@ fun setUpGameGrid(recyclerView: RecyclerView, gameViewModel: GameViewModel) {
         recyclerView.adapter = GameBoardAdapter(gameViewModel)
         recyclerView.layoutManager =
             GridLayoutManager(recyclerView.context, gameViewModel.cellsPerRow)
-
-        gameViewModel.gridCells.observeForever {
-            it?.let {
-                (recyclerView.adapter as GameBoardAdapter).data = it
-            }
-        }
     }
 }
+
+@BindingAdapter("gridCells")
+fun setGridCells(recyclerView: RecyclerView, gridCells: List<GridCell>) {
+    (recyclerView.adapter as GameBoardAdapter).data = gridCells
+}
+
+// ----- Data binding for high scores -----
 
 @BindingAdapter("highScoresAdapter")
 fun setUpHighScoresRecyclerViewAdapter(recyclerView: RecyclerView, highScoresViewModel: HighScoresViewModel) {

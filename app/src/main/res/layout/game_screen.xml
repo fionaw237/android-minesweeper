@@ -82,7 +82,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:gameGrid="@{gameViewModel}"/>
+            app:gameGrid="@{gameViewModel}"
+            app:gridCells="@{gameViewModel.gridCells}"/>
 <!--        app:layout_constraintDimensionRatio="1:1"-->
 
 
