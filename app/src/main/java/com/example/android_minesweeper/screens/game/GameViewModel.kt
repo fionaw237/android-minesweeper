@@ -17,6 +17,8 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
     private val numberOfRows = 8
     val cellsPerRow = 8
 
+    var timerStarted = false
+
     @Bindable
     var flagsRemaining: String = ""
 
@@ -28,10 +30,13 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
         }
 
     init {
-       setNumberOfMinesFromDifficulty()
-        gridCells = (1..(cellsPerRow * numberOfRows)).map {
-            GridCell(hasMine = (it % 2 == 0))
-        }.toMutableList()
+        setUpGame()
+    }
+
+    private fun setUpGame() {
+        timerStarted = false
+        setNumberOfMinesFromDifficulty()
+        setUpGridCells()
     }
 
     private fun setNumberOfMinesFromDifficulty() {
@@ -42,18 +47,57 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
         }
     }
 
-    fun gridCellTapped(gridCell: GridCell) {
-        if (!gridCell.uncovered) {
-            gridCells.find { it == gridCell }?.let {
-                it.uncovered = true
+    private fun randomMinePositions(): Set<Int> {
+        var positions = mutableSetOf<Int>()
+        while (positions.size < numberOfMines) {
+            (1..(cellsPerRow * numberOfRows)).random().also { randomPosition ->
+                if (!positions.contains(randomPosition)) {
+                    positions.add(randomPosition)
+                }
             }
-            gridCells = gridCells
+        }
+        return positions
+    }
+
+    private fun randomlyDistributeMines() {
+        randomMinePositions().also { positions ->
+            gridCells.forEach { cell ->
+                cell.hasMine = positions.contains(cell.positionInGrid)
+            }
         }
     }
 
-    fun resetGrid() {
-        gridCells = (1..(cellsPerRow * numberOfRows)).map {
-            GridCell(hasMine = (it % 2 == 0))
+    private fun setUpGridCells() {
+        gridCells = (1..(cellsPerRow * numberOfRows)).map { position ->
+            GridCell(positionInGrid = position)
         }.toMutableList()
+    }
+
+    fun gridCellTapped(gridCell: GridCell) {
+        if (!timerStarted) {
+            randomlyDistributeMines()
+            timerStarted = true
+        }
+
+        if (!gridCell.uncovered) {
+            gridCells.find { it == gridCell }?.let { cell ->
+                cell.uncovered = true
+            }
+            refreshGridCells(gridCells)
+        }
+    }
+
+    private fun refreshGridCells(updatedGridCells: MutableList<GridCell>) {
+        gridCells = updatedGridCells
+    }
+
+    fun resetGrid() {
+        setUpGame()
+    }
+
+    private fun setFlagsLabel() {
+        if (flagsRemaining.toInt() != 0) {
+            flagsRemaining = (flagsRemaining.toInt() - 1).toString()
+        }
     }
 }
