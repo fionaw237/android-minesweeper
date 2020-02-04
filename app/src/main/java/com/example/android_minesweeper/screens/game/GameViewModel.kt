@@ -99,12 +99,63 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
     }
 
     private fun numberOfMinesInVicinityOfCell(cell: GridCell): String {
-        return "2"
+        return getSurroundingCells(cell).count {it.hasMine }.toString()
     }
+
+    private fun getSurroundingCells(cell: GridCell): List<GridCell> {
+        //TODO: make position a 2D quantity like an index path!
+        var surroundingCells: MutableList<GridCell> = mutableListOf()
+
+//        if (!isCellOnLeftEdge(cell)) {
+//            surroundingCells.add(gridCells.find { it.positionInGrid == cell.positionInGrid - 1 }!!)
+//        }
+//        if (!isCellOnRightEdge(cell)) {
+//             surroundingCells.add(gridCells.find { it.positionInGrid == cell.positionInGrid + 1 }!!)
+//        }
+//        if (!isCellOnTopEdge(cell)) {
+//            val potentialCellsAbove = gridCells.filter { ( (cell.positionInGrid - cellsPerRow - 1)..(cell.positionInGrid - cellsPerRow + 1) ).contains(it.positionInGrid) }
+//            surroundingCells.addAll(potentialCellsAbove.filter { cellIsInRowAbove(it, cell) })
+//        }
+//        if (!isCellOnBottomEdge(cell)) {
+//            val potentialCellsBelow = gridCells.filter { ( (cell.positionInGrid + cellsPerRow - 1)..(cell.positionInGrid + cellsPerRow + 1) ).contains(it.positionInGrid) }
+//            surroundingCells.addAll(potentialCellsBelow.filter { cellIsInRowBelow(it, cell) })
+//        }
+
+        return surroundingCells
+    }
+
+//    private fun cellIsInRowAbove(cellToCheck: GridCell, referenceCell: GridCell): Boolean {
+//        val positionOfFirstCellInRowAbove = (referenceCell.positionInGrid % cellsPerRow) * numberOfRows
+//        val positionOfLastCellInRowAbove = positionOfFirstCellInRowAbove + cellsPerRow
+//        return (positionOfFirstCellInRowAbove..positionOfLastCellInRowAbove).contains(cellToCheck.positionInGrid)
+//    }
+//
+//    private fun cellIsInRowBelow(cellToCheck: GridCell, referenceCell: GridCell): Boolean {
+//        val positionOfFirstCellInRowBelow = (referenceCell.positionInGrid % cellsPerRow) * numberOfRows
+//        val positionOfLastCellInRowBelow = positionOfFirstCellInRowBelow + cellsPerRow
+//        return (positionOfFirstCellInRowBelow..positionOfLastCellInRowBelow).contains(cellToCheck.positionInGrid)
+//    }
+//
+//    private fun isCellOnLeftEdge(cell: GridCell): Boolean {
+//        return (cell.positionInGrid - 1) % cellsPerRow == 0
+//    }
+//
+//    private fun isCellOnRightEdge(cell: GridCell): Boolean {
+//        return cell.positionInGrid % cellsPerRow == 0
+//    }
+//
+//    private fun isCellOnTopEdge(cell: GridCell): Boolean {
+//        return cell.positionInGrid <= cellsPerRow
+//    }
+//
+//    private fun isCellOnBottomEdge(cell: GridCell): Boolean {
+//        return cell.positionInGrid >= (numberOfRows * cellsPerRow) - cellsPerRow
+//    }
 
     private fun revealSurroundingCellsWithZeroMines(cell: GridCell) {
 
     }
+
 
     private fun refreshGridCells(updatedGridCells: MutableList<GridCell>) {
         gridCells = updatedGridCells
