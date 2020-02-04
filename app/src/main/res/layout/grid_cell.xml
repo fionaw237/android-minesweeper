@@ -18,8 +18,6 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
         android:background="@{gridCell.cellClickedForGameOver ? @color/redCellBackground : @color/greyCellBackground}">
 
         <ImageButton
@@ -27,6 +25,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/ic_uncovered_button"
             android:visibility="@{gridCell.uncovered ? View.GONE : View.VISIBLE}"
+            android:clickable="@{gridCell.clickable}"
             android:onClick="@{() -> gameViewModel.gridCellTapped(gridCell)}"/>
 
         <ImageView

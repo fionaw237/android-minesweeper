@@ -98,8 +98,7 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
 
     private fun gameOver(clickedCell: GridCell) {
         clickedCell.cellClickedForGameOver = true
-        showAllMines()
-        // disable user interaction on all cells
+        configureCellsForGameOver()
         // invalidate timer
         // play sound
         // configure reset button
@@ -110,7 +109,7 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
         setUpGame()
     }
 
-    private fun showAllMines() {
+    private fun configureCellsForGameOver() {
         gridCells.forEach { cell ->
             cell.configureForGameOver()
         }
