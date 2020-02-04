@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        android:background="#FFCBCBCB">
+        android:background="@{gridCell.cellClickedForGameOver ? @color/redCellBackground : @color/greyCellBackground}">
 
         <ImageButton
             android:layout_width="match_parent"
