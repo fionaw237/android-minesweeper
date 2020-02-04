@@ -29,12 +29,12 @@ class AppDatabaseTest {
         highScoreDao = db.highScoreDao
 
         highScores = listOf(
-            HighScore(difficulty = "Beginner", name = "Eva", time = 22),
-            HighScore(difficulty = "Beginner", name = "Merlin", time = 24),
-            HighScore(difficulty = "Intermediate", name = "Herman", time = 31),
-            HighScore(difficulty = "Advanced", name = "Sparkles", time = 42),
-            HighScore(difficulty = "Intermediate", name = "Belle", time = 32),
-            HighScore(difficulty = "Beginner", name = "Frankles", time = 19)
+            HighScore(difficulty = "Beginner", name = "Eva", time = "22"),
+            HighScore(difficulty = "Beginner", name = "Merlin", time = "24"),
+            HighScore(difficulty = "Intermediate", name = "Herman", time = "31"),
+            HighScore(difficulty = "Advanced", name = "Sparkles", time = "42"),
+            HighScore(difficulty = "Intermediate", name = "Belle", time = "32"),
+            HighScore(difficulty = "Beginner", name = "Frankles", time = "19")
         )
         highScores.forEach { highScoreDao.insert(it) }
     }
@@ -66,10 +66,10 @@ class AppDatabaseTest {
     @Throws(Exception::class)
     fun testUpdateEntry() {
         val evaScore = highScoreDao.getByDifficulty("Beginner").find { it.name == "Eva" }
-        evaScore!!.time = 20
+        evaScore!!.time = "20"
         highScoreDao.update(evaScore)
         highScoreDao.getByDifficulty("Beginner").filter { it.name == "Eva" }.also { updatedScore ->
-            assertEquals(updatedScore[0].time, 20)
+            assertEquals(updatedScore[0].time, "20")
         }
     }
 }
