@@ -7,6 +7,7 @@ class GridCell(val positionInGrid: Int) {
     var uncovered: Boolean = false
     var cellClickedForGameOver: Boolean = false
     var clickable = true
+    var minesInVicinity: String = ""
 
     fun configureForGameOver() {
         clickable = false
@@ -16,4 +17,5 @@ class GridCell(val positionInGrid: Int) {
 
         // }
     }
+
 }

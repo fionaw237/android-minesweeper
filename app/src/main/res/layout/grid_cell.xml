@@ -20,6 +20,18 @@
         android:layout_height="wrap_content"
         android:background="@{gridCell.cellClickedForGameOver ? @color/redCellBackground : @color/greyCellBackground}">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:text="@{gridCell.minesInVicinity}"
+            android:textSize="20sp"
+            android:visibility="@{gridCell.uncovered &amp;&amp; !gridCell.hasMine ? View.VISIBLE : View.GONE}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
         <ImageButton
             android:layout_width="match_parent"
             android:layout_height="match_parent"

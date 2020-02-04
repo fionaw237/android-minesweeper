@@ -60,6 +60,7 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
     }
 
     private fun randomlyDistributeMines() {
+        //TODO: should never click on a mine with the first click!
         randomMinePositions().also { positions ->
             gridCells.forEach { cell ->
                 cell.hasMine = positions.contains(cell.positionInGrid)
@@ -81,15 +82,28 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
             timerStarted = true
         }
 
-        gridCells.find { it == gridCell }?.let { cell ->
-            cell.uncovered = true
-            if (cell.hasMine) {
-                gameOver(clickedCell = cell)
-                return
-            }
+        gridCell.uncovered = true
+
+        if (gridCell.hasMine) {
+            gameOver(clickedCell = gridCell)
+            return
+        }
+
+        gridCell.minesInVicinity = numberOfMinesInVicinityOfCell(gridCell)
+
+        if (gridCell.minesInVicinity == "0") {
+            revealSurroundingCellsWithZeroMines(gridCell)
         }
 
         refreshGridCells(gridCells)
+    }
+
+    private fun numberOfMinesInVicinityOfCell(cell: GridCell): String {
+        return "2"
+    }
+
+    private fun revealSurroundingCellsWithZeroMines(cell: GridCell) {
+
     }
 
     private fun refreshGridCells(updatedGridCells: MutableList<GridCell>) {
