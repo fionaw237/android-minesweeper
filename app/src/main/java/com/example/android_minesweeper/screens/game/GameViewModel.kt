@@ -108,9 +108,29 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
     }
 
     private fun getSurroundingCells(cell: GridCell): List<GridCell> {
-        //TODO: make position a 2D quantity like an index path!
         var surroundingCells: MutableList<GridCell> = mutableListOf()
+        ( (cell.indexPath.first - 1)..(cell.indexPath.first + 1) ).forEach { row ->
+            ( (cell.indexPath.second - 1)..(cell.indexPath.second + 1) ).forEach { column ->
+                if (!isOutOfBounds(Pair(row, column)) && !isAtSelectedCell(selectedCell = cell, indexPath = Pair(row, column))) {
+                    gridCells.find { it.indexPath == Pair(row, column) }?.let { cellToAdd ->
+                        surroundingCells.add(cellToAdd)
+                    }
+                }
+            }
+        }
         return surroundingCells
+    }
+
+    private fun isOutOfBounds(indexPath: Pair<Int, Int>): Boolean {
+        return (indexPath.first < 0 ||
+                indexPath.second < 0 ||
+                indexPath.first >= numberOfRows ||
+                indexPath.second >= cellsPerRow)
+    }
+
+    private fun isAtSelectedCell(selectedCell: GridCell, indexPath: Pair<Int, Int>): Boolean {
+        return (selectedCell.indexPath.first == indexPath.first &&
+                selectedCell.indexPath.second == indexPath.second)
     }
 
     private fun revealSurroundingCellsWithZeroMines(cell: GridCell) {
