@@ -47,10 +47,12 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
         }
     }
 
-    private fun randomMinePositions(): Set<Int> {
-        var positions = mutableSetOf<Int>()
+    private fun randomMinePositions(): Set<Pair<Int, Int>> {
+        var positions = mutableSetOf<Pair<Int, Int>>()
         while (positions.size < numberOfMines) {
-            (1..(cellsPerRow * numberOfRows)).random().also { randomPosition ->
+            val randomRow = (0 until numberOfRows).random()
+            val randomColumn = (0 until cellsPerRow).random()
+            Pair(randomRow, randomColumn).also { randomPosition ->
                 if (!positions.contains(randomPosition)) {
                     positions.add(randomPosition)
                 }
@@ -63,15 +65,18 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
         //TODO: should never click on a mine with the first click!
         randomMinePositions().also { positions ->
             gridCells.forEach { cell ->
-                cell.hasMine = positions.contains(cell.positionInGrid)
+                cell.hasMine = positions.contains(cell.indexPath)
             }
         }
     }
 
     private fun setUpGridCells() {
-        gridCells = (1..(cellsPerRow * numberOfRows)).map { position ->
-            GridCell(positionInGrid = position)
-        }.toMutableList()
+        gridCells = mutableListOf()
+        (0 until numberOfRows).forEach { row ->
+            (0 until cellsPerRow).forEach { column ->
+                gridCells.add(GridCell(indexPath = Pair(row, column)))
+            }
+        }
     }
 
     fun gridCellTapped(gridCell: GridCell) {
@@ -105,52 +110,8 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
     private fun getSurroundingCells(cell: GridCell): List<GridCell> {
         //TODO: make position a 2D quantity like an index path!
         var surroundingCells: MutableList<GridCell> = mutableListOf()
-
-//        if (!isCellOnLeftEdge(cell)) {
-//            surroundingCells.add(gridCells.find { it.positionInGrid == cell.positionInGrid - 1 }!!)
-//        }
-//        if (!isCellOnRightEdge(cell)) {
-//             surroundingCells.add(gridCells.find { it.positionInGrid == cell.positionInGrid + 1 }!!)
-//        }
-//        if (!isCellOnTopEdge(cell)) {
-//            val potentialCellsAbove = gridCells.filter { ( (cell.positionInGrid - cellsPerRow - 1)..(cell.positionInGrid - cellsPerRow + 1) ).contains(it.positionInGrid) }
-//            surroundingCells.addAll(potentialCellsAbove.filter { cellIsInRowAbove(it, cell) })
-//        }
-//        if (!isCellOnBottomEdge(cell)) {
-//            val potentialCellsBelow = gridCells.filter { ( (cell.positionInGrid + cellsPerRow - 1)..(cell.positionInGrid + cellsPerRow + 1) ).contains(it.positionInGrid) }
-//            surroundingCells.addAll(potentialCellsBelow.filter { cellIsInRowBelow(it, cell) })
-//        }
-
         return surroundingCells
     }
-
-//    private fun cellIsInRowAbove(cellToCheck: GridCell, referenceCell: GridCell): Boolean {
-//        val positionOfFirstCellInRowAbove = (referenceCell.positionInGrid % cellsPerRow) * numberOfRows
-//        val positionOfLastCellInRowAbove = positionOfFirstCellInRowAbove + cellsPerRow
-//        return (positionOfFirstCellInRowAbove..positionOfLastCellInRowAbove).contains(cellToCheck.positionInGrid)
-//    }
-//
-//    private fun cellIsInRowBelow(cellToCheck: GridCell, referenceCell: GridCell): Boolean {
-//        val positionOfFirstCellInRowBelow = (referenceCell.positionInGrid % cellsPerRow) * numberOfRows
-//        val positionOfLastCellInRowBelow = positionOfFirstCellInRowBelow + cellsPerRow
-//        return (positionOfFirstCellInRowBelow..positionOfLastCellInRowBelow).contains(cellToCheck.positionInGrid)
-//    }
-//
-//    private fun isCellOnLeftEdge(cell: GridCell): Boolean {
-//        return (cell.positionInGrid - 1) % cellsPerRow == 0
-//    }
-//
-//    private fun isCellOnRightEdge(cell: GridCell): Boolean {
-//        return cell.positionInGrid % cellsPerRow == 0
-//    }
-//
-//    private fun isCellOnTopEdge(cell: GridCell): Boolean {
-//        return cell.positionInGrid <= cellsPerRow
-//    }
-//
-//    private fun isCellOnBottomEdge(cell: GridCell): Boolean {
-//        return cell.positionInGrid >= (numberOfRows * cellsPerRow) - cellsPerRow
-//    }
 
     private fun revealSurroundingCellsWithZeroMines(cell: GridCell) {
 

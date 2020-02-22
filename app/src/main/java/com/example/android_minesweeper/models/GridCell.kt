@@ -1,6 +1,6 @@
 package com.example.android_minesweeper.models
 
-class GridCell(val positionInGrid: Int) {
+class GridCell(val indexPath: Pair<Int, Int>) {
 
     var hasMine: Boolean = false
     var hasFlag: Boolean = false
