@@ -1,5 +1,7 @@
 package com.example.android_minesweeper
 
+import android.graphics.Color
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,6 +28,25 @@ fun setUpGameGrid(recyclerView: RecyclerView, gameViewModel: GameViewModel) {
 @BindingAdapter("gridCells")
 fun setGridCells(recyclerView: RecyclerView, gridCells: List<GridCell>) {
     (recyclerView.adapter as GameBoardAdapter).data = gridCells
+}
+
+@BindingAdapter("minesInVicinityLabelColour")
+fun setMinesInVicinityLabelColour(textView: TextView, minesInVicinity: String) {
+    if (minesInVicinity != "") {
+        textView.setTextColor(
+            when (minesInVicinity.toInt()) {
+                1 -> Color.BLUE
+                2 -> Color.GREEN
+                3 -> Color.RED
+                4 -> Color.parseColor("#800080")
+                5 -> Color.MAGENTA
+                6 -> Color.CYAN
+                7 -> Color.BLACK
+                8 -> Color.GRAY
+                else -> Color.WHITE
+            }
+        )
+    }
 }
 
 // ----- Data binding for high scores -----

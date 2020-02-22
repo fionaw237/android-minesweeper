@@ -27,6 +27,7 @@
             android:text="@{gridCell.minesInVicinity}"
             android:textSize="20sp"
             android:visibility="@{gridCell.uncovered &amp;&amp; !gridCell.hasMine ? View.VISIBLE : View.GONE}"
+            app:minesInVicinityLabelColour="@{gridCell.minesInVicinity}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
