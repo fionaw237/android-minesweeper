@@ -133,9 +133,35 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
     }
 
     private fun revealSurroundingCellsWithZeroMines(cell: GridCell) {
+        var cellsChecked = mutableSetOf(cell)
+        var cellsWithZeroMinesInVicinity = mutableSetOf(cell)
+
+        while (cellsWithZeroMinesInVicinity.isNotEmpty()) {
+            val cellsToCheck = cellsWithZeroMinesInVicinity.toMutableSet()
+            cellsWithZeroMinesInVicinity = mutableSetOf()
+            cellsToCheck.forEach { cellToCheck ->
+                val adjacentCells = getSurroundingCells(cellToCheck)
+                // loop through adjacent index paths which have not already been checked
+                adjacentCells.filter { !cellsChecked.contains(it) }
+                    .forEach { adjacentCell ->
+                        cellsChecked.add(adjacentCell)
+                        numberOfMinesInVicinityOfCell(adjacentCell).also {  mines ->
+                            if (numberOfMinesInVicinityOfCell(adjacentCell) == "0") {
+                                cellsWithZeroMinesInVicinity.add(adjacentCell)
+                            }
+                            if (!adjacentCell.hasFlag) {
+                                gridCells.find { it == adjacentCell }?.let { cell ->
+                                    cell.uncovered = true
+                                    cell.minesInVicinity = mines
+                                }
+                            }
+                        }
+
+                    }
+            }
+        }
 
     }
-
 
     private fun refreshGridCells(updatedGridCells: MutableList<GridCell>) {
         gridCells = updatedGridCells

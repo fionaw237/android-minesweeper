@@ -1,6 +1,7 @@
 package com.example.android_minesweeper
 
 import android.graphics.Color
+import android.view.View
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.GridLayoutManager
@@ -32,7 +33,7 @@ fun setGridCells(recyclerView: RecyclerView, gridCells: List<GridCell>) {
 
 @BindingAdapter("minesInVicinityLabelColour")
 fun setMinesInVicinityLabelColour(textView: TextView, minesInVicinity: String) {
-    if (minesInVicinity != "") {
+    if (minesInVicinity != "" && minesInVicinity != "0") {
         textView.setTextColor(
             when (minesInVicinity.toInt()) {
                 1 -> Color.BLUE
@@ -42,10 +43,18 @@ fun setMinesInVicinityLabelColour(textView: TextView, minesInVicinity: String) {
                 5 -> Color.MAGENTA
                 6 -> Color.CYAN
                 7 -> Color.BLACK
-                8 -> Color.GRAY
-                else -> Color.WHITE
+                else -> Color.GRAY
             }
         )
+    }
+}
+
+@BindingAdapter("minesInVicinity", "uncovered", "hasMine", requireAll = true)
+fun setMinesInVicinityLabelVisibility(textView: TextView, minesInVicinity: String, uncovered: Boolean, hasMine: Boolean) {
+    textView.visibility = if (minesInVicinity != "0" && uncovered && !hasMine) {
+        View.VISIBLE
+    } else {
+        View.GONE
     }
 }
 

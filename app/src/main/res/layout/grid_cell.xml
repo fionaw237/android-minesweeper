@@ -26,7 +26,9 @@
             android:background="@android:color/transparent"
             android:text="@{gridCell.minesInVicinity}"
             android:textSize="20sp"
-            android:visibility="@{gridCell.uncovered &amp;&amp; !gridCell.hasMine ? View.VISIBLE : View.GONE}"
+            app:minesInVicinity="@{gridCell.minesInVicinity}"
+            app:uncovered="@{gridCell.uncovered}"
+            app:hasMine="@{gridCell.hasMine}"
             app:minesInVicinityLabelColour="@{gridCell.minesInVicinity}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -50,8 +52,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
-
-
+        
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
