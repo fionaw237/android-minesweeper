@@ -47,13 +47,13 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
         }
     }
 
-    private fun randomMinePositions(): Set<Pair<Int, Int>> {
+    private fun randomMinePositions(gridCellTapped: GridCell): Set<Pair<Int, Int>> {
         var positions = mutableSetOf<Pair<Int, Int>>()
         while (positions.size < numberOfMines) {
             val randomRow = (0 until numberOfRows).random()
             val randomColumn = (0 until cellsPerRow).random()
             Pair(randomRow, randomColumn).also { randomPosition ->
-                if (!positions.contains(randomPosition)) {
+                if (!positions.contains(randomPosition) && randomPosition != gridCellTapped.indexPath) {
                     positions.add(randomPosition)
                 }
             }
@@ -61,9 +61,8 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
         return positions
     }
 
-    private fun randomlyDistributeMines() {
-        //TODO: should never click on a mine with the first click!
-        randomMinePositions().also { positions ->
+    private fun randomlyDistributeMines(gridCellTapped: GridCell) {
+        randomMinePositions(gridCellTapped).also { positions ->
             gridCells.forEach { cell ->
                 cell.hasMine = positions.contains(cell.indexPath)
             }
@@ -83,7 +82,7 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
         if (gridCell.uncovered || gridCell.hasFlag) return
 
         if (!timerStarted) {
-            randomlyDistributeMines()
+            randomlyDistributeMines(gridCell)
             timerStarted = true
         }
 
