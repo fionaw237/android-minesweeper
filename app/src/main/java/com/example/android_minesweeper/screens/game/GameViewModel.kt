@@ -67,7 +67,7 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
     }
 
     private fun randomMinePositions(gridCellTapped: GridCell): Set<Pair<Int, Int>> {
-        var positions = mutableSetOf<Pair<Int, Int>>()
+        val positions = mutableSetOf<Pair<Int, Int>>()
         while (positions.size < numberOfMines) {
             val randomRow = (0 until numberOfRows).random()
             val randomColumn = (0 until cellsPerRow).random()
@@ -156,7 +156,7 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
     }
 
     private fun revealSurroundingCellsWithZeroMines(cell: GridCell) {
-        var cellsChecked = mutableSetOf(cell)
+        val cellsChecked = mutableSetOf(cell)
         var cellsWithZeroMinesInVicinity = mutableSetOf(cell)
 
         while (cellsWithZeroMinesInVicinity.isNotEmpty()) {
