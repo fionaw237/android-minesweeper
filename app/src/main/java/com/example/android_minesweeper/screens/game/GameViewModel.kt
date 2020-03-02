@@ -2,11 +2,15 @@ package com.example.android_minesweeper.screens.game
 
 import androidx.databinding.Bindable
 import androidx.databinding.library.baseAdapters.BR
+import androidx.lifecycle.MutableLiveData
 import com.example.android_minesweeper.models.GridCell
 import com.example.android_minesweeper.Difficulty
+import com.example.android_minesweeper.UILiveDataResponse
 import com.example.android_minesweeper.screens.BaseViewModel
 
 class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
+
+    var responseLiveData = MutableLiveData<UILiveDataResponse>()
 
     var numberOfMines: Int = 0
         set(value) {
@@ -83,6 +87,7 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
 
         if (!timerStarted) {
             randomlyDistributeMines(gridCell)
+            responseLiveData.value = UILiveDataResponse.StartTimer
             timerStarted = true
         }
 
