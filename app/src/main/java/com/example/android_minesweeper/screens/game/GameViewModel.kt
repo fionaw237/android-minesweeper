@@ -207,7 +207,7 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
         if (!cell.hasFlag) {
             when (flagsRemaining) {
                 "0" -> {
-                    // present no flags warning
+                    responseLiveData.value = UILiveDataResponse.ShowNoFlagsMessage
                 }
                 else -> {
                     // Add flag

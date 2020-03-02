@@ -1,5 +1,6 @@
 package com.example.android_minesweeper.screens.game
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,11 +10,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.findNavController
 import com.example.android_minesweeper.R
 import com.example.android_minesweeper.UILiveDataResponse
 import com.example.android_minesweeper.databinding.GameScreenBinding
-import com.example.android_minesweeper.screens.welcome.WelcomeScreenFragmentDirections
 
 class GameScreenFragment : Fragment() {
 
@@ -34,6 +33,17 @@ class GameScreenFragment : Fragment() {
                 when (result) {
                     is UILiveDataResponse.StartTimer -> {
                         binding.root.findViewById<Chronometer>(R.id.timer)?.start()
+                    }
+                    is UILiveDataResponse.ShowNoFlagsMessage -> {
+                        with(AlertDialog.Builder(context)) {
+                            setTitle("No flags left!")
+                            setMessage("Remove an existing flag to place one elsewhere.")
+                            setCancelable(false)
+                            setPositiveButton("OK") { dialog, _ ->
+                                dialog.cancel()
+                            }
+                            show()
+                        }
                     }
                     else -> {}
                 }
