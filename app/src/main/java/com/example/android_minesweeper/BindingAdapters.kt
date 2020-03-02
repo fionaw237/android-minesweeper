@@ -2,6 +2,7 @@ package com.example.android_minesweeper
 
 import android.graphics.Color
 import android.view.View
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.GridLayoutManager
@@ -55,6 +56,17 @@ fun setMinesInVicinityLabelVisibility(textView: TextView, minesInVicinity: Strin
     } else {
         View.GONE
     }
+}
+
+@BindingAdapter("setFaceImage")
+fun setFaceImage(imageButton: ImageButton, gameState: GameState) {
+    imageButton.setBackgroundResource(
+        when (gameState) {
+            GameState.RUNNING -> R.drawable.ic_happy
+            GameState.WON -> R.drawable.ic_cool
+            GameState.GAME_OVER -> R.drawable.ic_sad
+        }
+    )
 }
 
 // ----- Data binding for high scores -----

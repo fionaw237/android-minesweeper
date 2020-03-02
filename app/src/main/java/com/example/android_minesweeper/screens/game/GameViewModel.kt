@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.android_minesweeper.models.GridCell
 import com.example.android_minesweeper.Difficulty
 import com.example.android_minesweeper.FlagAction
+import com.example.android_minesweeper.GameState
 import com.example.android_minesweeper.UILiveDataResponse
 import com.example.android_minesweeper.screens.BaseViewModel
 
@@ -23,6 +24,13 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
     val cellsPerRow = 8
 
     var timerStarted = false
+
+    @Bindable
+    var gameState = GameState.WON
+    set(value) {
+        field = value
+        notifyPropertyChanged(BR.gameState)
+    }
 
     @Bindable
     var flagsRemaining: String = ""
@@ -177,6 +185,7 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
     }
 
     private fun gameOver(clickedCell: GridCell) {
+        gameState = GameState.GAME_OVER
         clickedCell.cellClickedForGameOver = true
         configureCellsForGameOver()
         responseLiveData.value = UILiveDataResponse.StopTimer
@@ -186,6 +195,7 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
     }
 
     fun resetGrid() {
+        gameState = GameState.RUNNING
         responseLiveData.value = UILiveDataResponse.ResetTimer
         setUpGame()
     }
@@ -222,4 +232,9 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
         }
         refreshGridCells(gridCells)
     }
+
+    private fun handleGameWon() {
+        gameState = GameState.WON
+    }
+
 }
