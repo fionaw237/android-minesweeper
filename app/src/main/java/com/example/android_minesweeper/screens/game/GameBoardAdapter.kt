@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.android_minesweeper.R
 import com.example.android_minesweeper.databinding.GridCellBinding
 import com.example.android_minesweeper.models.GridCell
+import kotlinx.android.synthetic.main.grid_cell.view.*
 
 class GameBoardAdapter(val gameViewModel: GameViewModel) : RecyclerView.Adapter<GameBoardAdapter.GridCellViewHolder>() {
 
@@ -41,6 +42,10 @@ class GameBoardAdapter(val gameViewModel: GameViewModel) : RecyclerView.Adapter<
     override fun onBindViewHolder(holder: GridCellViewHolder, position: Int) {
         holder.bind.gameViewModel = gameViewModel
         holder.bind.gridCell = data[position]
+        holder.bind.root.grid_cell_image_button.setOnLongClickListener {
+            gameViewModel.handleLongPress(data[position])
+            true
+        }
     }
 
     class GridCellViewHolder(val view: View): RecyclerView.ViewHolder(view) {

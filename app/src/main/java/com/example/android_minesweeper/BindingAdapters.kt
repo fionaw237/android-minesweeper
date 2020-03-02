@@ -21,8 +21,7 @@ fun setUpGameGrid(recyclerView: RecyclerView, gameViewModel: GameViewModel) {
     recyclerView.itemAnimator = null
     if (recyclerView.adapter == null) {
         recyclerView.adapter = GameBoardAdapter(gameViewModel)
-        recyclerView.layoutManager =
-            GridLayoutManager(recyclerView.context, gameViewModel.cellsPerRow)
+        recyclerView.layoutManager = GridLayoutManager(recyclerView.context, gameViewModel.cellsPerRow)
     }
 }
 

@@ -5,6 +5,7 @@ import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.MutableLiveData
 import com.example.android_minesweeper.models.GridCell
 import com.example.android_minesweeper.Difficulty
+import com.example.android_minesweeper.FlagAction
 import com.example.android_minesweeper.UILiveDataResponse
 import com.example.android_minesweeper.screens.BaseViewModel
 
@@ -25,6 +26,10 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
 
     @Bindable
     var flagsRemaining: String = ""
+    set(value) {
+        field = value
+        notifyPropertyChanged(BR.flagsRemaining)
+    }
 
     @Bindable
     var gridCells: MutableList<GridCell> = mutableListOf()
@@ -191,9 +196,30 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
         }
     }
 
-    private fun setFlagsLabel() {
-        if (flagsRemaining.toInt() != 0) {
-            flagsRemaining = (flagsRemaining.toInt() - 1).toString()
+    private fun setFlagsLabel(flagAction: FlagAction) {
+        flagsRemaining =  when (flagAction) {
+            FlagAction.REMOVED -> (flagsRemaining.toInt() + 1).toString()
+            FlagAction.ADDED -> (flagsRemaining.toInt() - 1).toString()
         }
+    }
+
+    fun handleLongPress(cell: GridCell) {
+        if (!cell.hasFlag) {
+            when (flagsRemaining) {
+                "0" -> {
+                    responseLiveData.value = UILiveDataResponse.ShowNoFlagsMessage
+                }
+                else -> {
+                    // Add flag
+                    cell.hasFlag = true
+                    setFlagsLabel(FlagAction.ADDED)
+                }
+            }
+        } else {
+            // Remove flag
+            cell.hasFlag = false
+            setFlagsLabel(FlagAction.REMOVED)
+        }
+        refreshGridCells(gridCells)
     }
 }
