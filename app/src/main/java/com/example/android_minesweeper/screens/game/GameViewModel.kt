@@ -146,10 +146,8 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
     }
 
     private fun isOutOfBounds(indexPath: Pair<Int, Int>): Boolean {
-        return (indexPath.first < 0 ||
-                indexPath.second < 0 ||
-                indexPath.first >= numberOfRows ||
-                indexPath.second >= cellsPerRow)
+        return ( !(0 until numberOfRows).contains(indexPath.first) ||
+                 !(0 until cellsPerRow).contains(indexPath.second) )
     }
 
     private fun isAtSelectedCell(selectedCell: GridCell, indexPath: Pair<Int, Int>): Boolean {
@@ -198,7 +196,6 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
         configureCellsForGameOver()
         responseLiveData.value = UILiveDataResponse.StopTimer
         // play sound
-        // configure reset button
         refreshGridCells(gridCells)
     }
 
