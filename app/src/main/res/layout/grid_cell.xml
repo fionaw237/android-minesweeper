@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="gameViewModel"
+            type="com.example.android_minesweeper.screens.game.GameViewModel" />
+
+        <variable
+            name="gridCell"
+            type="com.example.android_minesweeper.models.GridCell" />
+
+        <import type="android.view.View"/>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@{gridCell.cellClickedForGameOver ? @color/redCellBackground : @color/greyCellBackground}">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:text="@{gridCell.minesInVicinity}"
+            android:textSize="20sp"
+            app:minesInVicinity="@{gridCell.minesInVicinity}"
+            app:uncovered="@{gridCell.uncovered}"
+            app:hasMine="@{gridCell.hasMine}"
+            app:minesInVicinityLabelColour="@{gridCell.minesInVicinity}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_uncovered_button"
+            android:visibility="@{gridCell.uncovered ? View.GONE : View.VISIBLE}"
+            android:clickable="@{gridCell.clickable}"
+            android:onClick="@{() -> gameViewModel.gridCellTapped(gridCell)}"/>
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_mine"
+            android:visibility="@{gridCell.hasMine &amp;&amp; gridCell.uncovered? View.VISIBLE : View.INVISIBLE, default=invisible}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+        
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

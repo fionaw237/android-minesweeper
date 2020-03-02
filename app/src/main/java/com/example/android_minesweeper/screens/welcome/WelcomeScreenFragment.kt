@@ -28,9 +28,10 @@ class WelcomeScreenFragment : Fragment() {
         viewModel.responseLiveData.observe(this, Observer { response ->
             response?.let { result ->
                 this.findNavController().navigate(
-                    when (result) {
-                        is UILiveDataResponse.NavigateToHighScores -> WelcomeScreenFragmentDirections.actionWelcomeScreenFragmentToBestTimesFragment()
-                        is UILiveDataResponse.NavigateToGameScreen -> WelcomeScreenFragmentDirections.actionWelcomeScreenFragmentToGameScreenFragment(result.difficulty)
+                    if (result is UILiveDataResponse.NavigateToGameScreen) {
+                        WelcomeScreenFragmentDirections.actionWelcomeScreenFragmentToGameScreenFragment(result.difficulty)
+                    } else {
+                        WelcomeScreenFragmentDirections.actionWelcomeScreenFragmentToBestTimesFragment()
                     }
                 )
                 viewModel.doneNavigating()
