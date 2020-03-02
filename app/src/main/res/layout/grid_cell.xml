@@ -36,18 +36,29 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
 
         <ImageButton
+            android:id="@+id/grid_cell_image_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/ic_uncovered_button"
+            android:background="@{gridCell.hasFlag ? @drawable/ic_minesweeper_flag : @drawable/ic_uncovered_button, default=@drawable/ic_uncovered_button}"
             android:visibility="@{gridCell.uncovered ? View.GONE : View.VISIBLE}"
             android:clickable="@{gridCell.clickable}"
             android:onClick="@{() -> gameViewModel.gridCellTapped(gridCell)}"/>
 
         <ImageView
+            android:id="@+id/mine_image"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/ic_mine"
             android:visibility="@{gridCell.hasMine &amp;&amp; gridCell.uncovered? View.VISIBLE : View.INVISIBLE, default=invisible}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageView
+            android:id="@+id/flag_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

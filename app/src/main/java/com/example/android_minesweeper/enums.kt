@@ -5,3 +5,8 @@ enum class Difficulty(val value: String) {
     INTERMEDIATE("Intermediate"),
     ADVANCED("Advanced")
 }
+
+enum class FlagAction {
+    ADDED,
+    REMOVED
+}
