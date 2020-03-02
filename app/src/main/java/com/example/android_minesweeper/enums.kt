@@ -10,3 +10,9 @@ enum class FlagAction {
     ADDED,
     REMOVED
 }
+
+enum class GameState {
+    RUNNING,
+    WON,
+    GAME_OVER
+}

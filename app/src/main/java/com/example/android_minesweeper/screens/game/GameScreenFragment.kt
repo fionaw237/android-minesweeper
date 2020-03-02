@@ -2,6 +2,7 @@ package com.example.android_minesweeper.screens.game
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,25 +20,48 @@ class GameScreenFragment : Fragment() {
     private lateinit var binding: GameScreenBinding
     private lateinit var viewModel: GameViewModel
     private lateinit var viewModelFactory: GameViewModelFactory
+    private lateinit var timer: Chronometer
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+
         binding = DataBindingUtil.inflate(inflater, R.layout.game_screen, container, false)
         viewModelFactory = GameViewModelFactory(GameScreenFragmentArgs.fromBundle(arguments!!).difficulty)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(GameViewModel::class.java)
         binding.gameViewModel = viewModel
         binding.lifecycleOwner = this
 
+        timer = binding.root.findViewById(R.id.timer)
+        timer.setOnChronometerTickListener {
+            updateGameTime()
+        }
 
         viewModel.responseLiveData.observe(this, Observer { response ->
             response?.let { result ->
                 when (result) {
                     is UILiveDataResponse.StartTimer -> {
-                        binding.root.findViewById<Chronometer>(R.id.timer)?.start()
+                        startTimer()
+                    }
+                    is UILiveDataResponse.StopTimer -> {
+                        stopTimer()
+                    }
+                    is UILiveDataResponse.ResetTimer -> {
+                        resetTimer()
                     }
                     is UILiveDataResponse.ShowNoFlagsMessage -> {
                         with(AlertDialog.Builder(context)) {
                             setTitle("No flags left!")
                             setMessage("Remove an existing flag to place one elsewhere.")
+                            setCancelable(false)
+                            setPositiveButton("OK") { dialog, _ ->
+                                dialog.cancel()
+                            }
+                            show()
+                        }
+                    }
+                    is UILiveDataResponse.ShowGameWonMessage -> {
+                        with(AlertDialog.Builder(context)) {
+                            setTitle("You won!")
+                            setMessage("Your time was ${viewModel.gameTime / 1000} seconds.")
                             setCancelable(false)
                             setPositiveButton("OK") { dialog, _ ->
                                 dialog.cancel()
@@ -52,5 +76,25 @@ class GameScreenFragment : Fragment() {
 
 
         return binding.root
+    }
+
+    private fun updateGameTime() {
+        viewModel.gameTime = SystemClock.elapsedRealtime() - timer.base
+    }
+
+    private fun startTimer() {
+        timer.base = SystemClock.elapsedRealtime()
+        timer.start()
+        viewModel.timerStarted = true
+    }
+
+    private fun stopTimer() {
+        timer.stop()
+        viewModel.timerStarted = false
+    }
+
+    private fun resetTimer() {
+        timer.base = SystemClock.elapsedRealtime()
+        stopTimer()
     }
 }

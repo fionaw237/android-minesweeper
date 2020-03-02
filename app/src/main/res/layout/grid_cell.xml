@@ -40,8 +40,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@{gridCell.hasFlag ? @drawable/ic_minesweeper_flag : @drawable/ic_uncovered_button, default=@drawable/ic_uncovered_button}"
-            android:visibility="@{gridCell.uncovered ? View.GONE : View.VISIBLE}"
-            android:clickable="@{gridCell.clickable}"
+            android:visibility="@{gridCell.uncovered || gridCell.showRedCross ? View.GONE : View.VISIBLE}"
+            android:enabled="@{gridCell.clickable}"
             android:onClick="@{() -> gameViewModel.gridCellTapped(gridCell)}"/>
 
         <ImageView
@@ -49,16 +49,18 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/ic_mine"
-            android:visibility="@{gridCell.hasMine &amp;&amp; gridCell.uncovered? View.VISIBLE : View.INVISIBLE, default=invisible}"
+            android:visibility="@{(gridCell.hasMine &amp;&amp; gridCell.uncovered) || gridCell.showRedCross ? View.VISIBLE : View.INVISIBLE, default=invisible}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
         <ImageView
-            android:id="@+id/flag_image"
+            android:id="@+id/red_cross"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@drawable/ic_cross"
+            android:visibility="@{gridCell.showRedCross ? View.VISIBLE : View.GONE, default=gone}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

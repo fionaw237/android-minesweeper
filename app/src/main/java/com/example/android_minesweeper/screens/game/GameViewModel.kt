@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.android_minesweeper.models.GridCell
 import com.example.android_minesweeper.Difficulty
 import com.example.android_minesweeper.FlagAction
+import com.example.android_minesweeper.GameState
 import com.example.android_minesweeper.UILiveDataResponse
 import com.example.android_minesweeper.screens.BaseViewModel
 
@@ -23,6 +24,14 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
     val cellsPerRow = 8
 
     var timerStarted = false
+    var gameTime = 0L
+
+    @Bindable
+    var gameState = GameState.RUNNING
+    set(value) {
+        field = value
+        notifyPropertyChanged(BR.gameState)
+    }
 
     @Bindable
     var flagsRemaining: String = ""
@@ -44,6 +53,7 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
 
     private fun setUpGame() {
         timerStarted = false
+        gameTime = 0L
         setNumberOfMinesFromDifficulty()
         setUpGridCells()
     }
@@ -93,7 +103,6 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
         if (!timerStarted) {
             randomlyDistributeMines(gridCell)
             responseLiveData.value = UILiveDataResponse.StartTimer
-            timerStarted = true
         }
 
         gridCell.uncovered = true
@@ -110,6 +119,12 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
         }
 
         refreshGridCells(gridCells)
+
+        if (isGameWon()) {
+            handleGameWon()
+        } else {
+            // Play sound
+        }
     }
 
     private fun numberOfMinesInVicinityOfCell(cell: GridCell): String {
@@ -178,15 +193,18 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
     }
 
     private fun gameOver(clickedCell: GridCell) {
+        gameState = GameState.GAME_OVER
         clickedCell.cellClickedForGameOver = true
         configureCellsForGameOver()
-        // invalidate timer
+        responseLiveData.value = UILiveDataResponse.StopTimer
         // play sound
         // configure reset button
         refreshGridCells(gridCells)
     }
 
     fun resetGrid() {
+        gameState = GameState.RUNNING
+        responseLiveData.value = UILiveDataResponse.ResetTimer
         setUpGame()
     }
 
@@ -206,9 +224,7 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
     fun handleLongPress(cell: GridCell) {
         if (!cell.hasFlag) {
             when (flagsRemaining) {
-                "0" -> {
-                    responseLiveData.value = UILiveDataResponse.ShowNoFlagsMessage
-                }
+                "0" -> responseLiveData.value = UILiveDataResponse.ShowNoFlagsMessage
                 else -> {
                     // Add flag
                     cell.hasFlag = true
@@ -221,5 +237,24 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
             setFlagsLabel(FlagAction.REMOVED)
         }
         refreshGridCells(gridCells)
+    }
+
+    private fun isGameWon(): Boolean {
+        val clickedCellCount = gridCells.filter { it.hasFlag || it.uncovered }.count()
+        val totalCellsInGrid = numberOfRows * cellsPerRow
+        return (clickedCellCount == totalCellsInGrid - flagsRemaining.toInt())
+    }
+
+    private fun handleGameWon() {
+        gameState = GameState.WON
+        disableCellInteraction()
+        responseLiveData.value = UILiveDataResponse.StopTimer
+        responseLiveData.value = UILiveDataResponse.ShowGameWonMessage
+    }
+
+    private fun disableCellInteraction() {
+        gridCells.forEach { cell ->
+            cell.disable()
+        }
     }
 }
