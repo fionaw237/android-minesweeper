@@ -24,9 +24,10 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
     val cellsPerRow = 8
 
     var timerStarted = false
+    var gameTime = 0L
 
     @Bindable
-    var gameState = GameState.WON
+    var gameState = GameState.RUNNING
     set(value) {
         field = value
         notifyPropertyChanged(BR.gameState)
@@ -52,6 +53,7 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
 
     private fun setUpGame() {
         timerStarted = false
+        gameTime = 0L
         setNumberOfMinesFromDifficulty()
         setUpGridCells()
     }
@@ -117,6 +119,12 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
         }
 
         refreshGridCells(gridCells)
+
+        if (isGameWon()) {
+            handleGameWon()
+        } else {
+            // Play sound
+        }
     }
 
     private fun numberOfMinesInVicinityOfCell(cell: GridCell): String {
@@ -216,9 +224,7 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
     fun handleLongPress(cell: GridCell) {
         if (!cell.hasFlag) {
             when (flagsRemaining) {
-                "0" -> {
-                    responseLiveData.value = UILiveDataResponse.ShowNoFlagsMessage
-                }
+                "0" -> responseLiveData.value = UILiveDataResponse.ShowNoFlagsMessage
                 else -> {
                     // Add flag
                     cell.hasFlag = true
@@ -233,8 +239,22 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
         refreshGridCells(gridCells)
     }
 
-    private fun handleGameWon() {
-        gameState = GameState.WON
+    private fun isGameWon(): Boolean {
+        val clickedCellCount = gridCells.filter { it.hasFlag || it.uncovered }.count()
+        val totalCellsInGrid = numberOfRows * cellsPerRow
+        return (clickedCellCount == totalCellsInGrid - flagsRemaining.toInt())
     }
 
+    private fun handleGameWon() {
+        gameState = GameState.WON
+        disableCellInteraction()
+        responseLiveData.value = UILiveDataResponse.StopTimer
+        responseLiveData.value = UILiveDataResponse.ShowGameWonMessage
+    }
+
+    private fun disableCellInteraction() {
+        gridCells.forEach { cell ->
+            cell.disable()
+        }
+    }
 }

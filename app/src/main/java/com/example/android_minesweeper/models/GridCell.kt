@@ -8,14 +8,19 @@ class GridCell(val indexPath: Pair<Int, Int>) {
     var cellClickedForGameOver: Boolean = false
     var clickable = true
     var minesInVicinity: String = ""
+    var showRedCross = false
 
     fun configureForGameOver() {
-        clickable = false
+        disable()
         if (hasMine && !hasFlag) {
             uncovered = true
-        } //else if (!cell.hasMine && cell.hasFlag) {
+        } else if (!hasMine && hasFlag) {
+            showRedCross = true
+        }
+    }
 
-        // }
+    fun disable() {
+        clickable = false
     }
 
 }

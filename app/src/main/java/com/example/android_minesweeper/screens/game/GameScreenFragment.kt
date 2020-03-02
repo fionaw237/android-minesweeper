@@ -29,7 +29,11 @@ class GameScreenFragment : Fragment() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(GameViewModel::class.java)
         binding.gameViewModel = viewModel
         binding.lifecycleOwner = this
+
         timer = binding.root.findViewById(R.id.timer)
+        timer.setOnChronometerTickListener {
+            updateGameTime()
+        }
 
         viewModel.responseLiveData.observe(this, Observer { response ->
             response?.let { result ->
@@ -54,6 +58,17 @@ class GameScreenFragment : Fragment() {
                             show()
                         }
                     }
+                    is UILiveDataResponse.ShowGameWonMessage -> {
+                        with(AlertDialog.Builder(context)) {
+                            setTitle("You won!")
+                            setMessage("Your time was ${viewModel.gameTime / 1000} seconds.")
+                            setCancelable(false)
+                            setPositiveButton("OK") { dialog, _ ->
+                                dialog.cancel()
+                            }
+                            show()
+                        }
+                    }
                     else -> {}
                 }
             }
@@ -61,6 +76,10 @@ class GameScreenFragment : Fragment() {
 
 
         return binding.root
+    }
+
+    private fun updateGameTime() {
+        viewModel.gameTime = SystemClock.elapsedRealtime() - timer.base
     }
 
     private fun startTimer() {
