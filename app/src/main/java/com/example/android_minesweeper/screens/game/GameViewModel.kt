@@ -93,7 +93,6 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
         if (!timerStarted) {
             randomlyDistributeMines(gridCell)
             responseLiveData.value = UILiveDataResponse.StartTimer
-            timerStarted = true
         }
 
         gridCell.uncovered = true
@@ -180,13 +179,14 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
     private fun gameOver(clickedCell: GridCell) {
         clickedCell.cellClickedForGameOver = true
         configureCellsForGameOver()
-        // invalidate timer
+        responseLiveData.value = UILiveDataResponse.StopTimer
         // play sound
         // configure reset button
         refreshGridCells(gridCells)
     }
 
     fun resetGrid() {
+        responseLiveData.value = UILiveDataResponse.ResetTimer
         setUpGame()
     }
 
