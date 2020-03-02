@@ -69,6 +69,17 @@ class GameScreenFragment : Fragment() {
                             show()
                         }
                     }
+                    is UILiveDataResponse.ShowGameWonWithHighScoreMessage -> {
+                        with(AlertDialog.Builder(context)) {
+                            setTitle("New high score!")
+                            setMessage("Your time was ${viewModel.gameTime / 1000} seconds.")
+                            setCancelable(false)
+                            setPositiveButton("OK") { dialog, _ ->
+                                dialog.cancel()
+                            }
+                            show()
+                        }
+                    }
                     else -> {}
                 }
             }

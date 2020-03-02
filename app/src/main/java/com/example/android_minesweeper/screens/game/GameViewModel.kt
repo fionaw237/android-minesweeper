@@ -249,12 +249,21 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
         gameState = GameState.WON
         disableCellInteraction()
         responseLiveData.value = UILiveDataResponse.StopTimer
-        responseLiveData.value = UILiveDataResponse.ShowGameWonMessage
+
+        responseLiveData.value =  if (checkForHighScore()) {
+            UILiveDataResponse.ShowGameWonWithHighScoreMessage
+        } else {
+            UILiveDataResponse.ShowGameWonMessage
+        }
     }
 
     private fun disableCellInteraction() {
         gridCells.forEach { cell ->
             cell.disable()
         }
+    }
+
+    private fun checkForHighScore(): Boolean {
+        return false
     }
 }
