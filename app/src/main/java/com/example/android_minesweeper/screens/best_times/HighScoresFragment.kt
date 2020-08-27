@@ -24,18 +24,18 @@ class HighScoresFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.high_scores_screen, container, false)
         setUpDifficultySpinner()
 
-        binding.difficultySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                parent?.getItemAtPosition(position)?.toString()?.getDifficultyEnum()?.let { difficulty ->
-                    viewModel.difficultyChosenToDisplay(difficulty)
-                }
-            }
-
-        }
+//        binding.difficultySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onNothingSelected(parent: AdapterView<*>?) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//            }
+//
+//            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+//                parent?.getItemAtPosition(position)?.toString()?.getDifficultyEnum()?.let { difficulty ->
+//                    viewModel.difficultyChosenToDisplay(difficulty)
+//                }
+//            }
+//
+//        }
 
         val dataSource = AppDatabase.getInstance(requireNotNull(this.activity).application).highScoreDao
         viewModelFactory = HighScoresViewModelFactory(dataSource)
@@ -53,7 +53,7 @@ class HighScoresFragment : Fragment() {
                 android.R.layout.simple_spinner_item
             ).also { adapter ->
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                binding.difficultySpinner.adapter = adapter
+//                binding.difficultySpinner.adapter = adapter
             }
         }
     }
