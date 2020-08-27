@@ -3,6 +3,9 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="redCellBackground">#D11D05</color>
+    <color name="redCellBackground">#BFBFBF</color>
     <color name="greyCellBackground">#FFCBCBCB</color>
+    <color name="teal">#008080</color>
+    <color name="buttonGrey">#C0C0C0</color>
+    <color name="backgroundGrey">#D3D3D3</color>
 </resources>
