@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -21,21 +22,25 @@ class HighScoresFragment : Fragment() {
     private lateinit var viewModelFactory: HighScoresViewModelFactory
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+
+        (activity as? AppCompatActivity)?.supportActionBar?.setShowHideAnimationEnabled(false)
+        (activity as? AppCompatActivity)?.supportActionBar?.show()
+
         binding = DataBindingUtil.inflate(inflater, R.layout.high_scores_screen, container, false)
-        setUpDifficultySpinner()
+//        setUpDifficultySpinner()
 
-        binding.difficultySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                parent?.getItemAtPosition(position)?.toString()?.getDifficultyEnum()?.let { difficulty ->
-                    viewModel.difficultyChosenToDisplay(difficulty)
-                }
-            }
-
-        }
+//        binding.difficultySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onNothingSelected(parent: AdapterView<*>?) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//            }
+//
+//            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+//                parent?.getItemAtPosition(position)?.toString()?.getDifficultyEnum()?.let { difficulty ->
+//                    viewModel.difficultyChosenToDisplay(difficulty)
+//                }
+//            }
+//
+//        }
 
         val dataSource = AppDatabase.getInstance(requireNotNull(this.activity).application).highScoreDao
         viewModelFactory = HighScoresViewModelFactory(dataSource)
@@ -45,16 +50,16 @@ class HighScoresFragment : Fragment() {
         return binding.root
     }
 
-    private fun setUpDifficultySpinner() {
-        context?.let { context ->
-            ArrayAdapter.createFromResource(
-                context,
-                R.array.difficulties,
-                android.R.layout.simple_spinner_item
-            ).also { adapter ->
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                binding.difficultySpinner.adapter = adapter
-            }
-        }
-    }
+//    private fun setUpDifficultySpinner() {
+//        context?.let { context ->
+//            ArrayAdapter.createFromResource(
+//                context,
+//                R.array.difficulties,
+//                android.R.layout.simple_spinner_item
+//            ).also { adapter ->
+//                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//                binding.difficultySpinner.adapter = adapter
+//            }
+//        }
+//    }
 }

@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/welcomeScreenFragment"
         android:name="com.example.android_minesweeper.screens.welcome.WelcomeScreenFragment"
-        android:label="WelcomeScreenFragment"
+        android:label="Minesweeper"
         tools:layout="@layout/welcome_screen">
         <action
             android:id="@+id/action_welcomeScreenFragment_to_gameScreenFragment"
@@ -21,7 +21,7 @@
     <fragment
         android:id="@+id/gameScreenFragment"
         android:name="com.example.android_minesweeper.screens.game.GameScreenFragment"
-        android:label="GameScreenFragment"
+        android:label="Minesweeper"
         tools:layout="@layout/game_screen">
         <action
             android:id="@+id/action_gameScreenFragment_to_bestTimesFragment"
@@ -33,6 +33,6 @@
     <fragment
         android:id="@+id/bestTimesFragment"
         android:name="com.example.android_minesweeper.screens.best_times.HighScoresFragment"
-        android:label="BestTimesFragment"
+        android:label="Best Times"
         tools:layout="@layout/high_scores_screen"/>
 </navigation>

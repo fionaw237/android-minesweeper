@@ -12,114 +12,39 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
+        android:background="@color/backgroundGrey"
         android:clickable="true"
         android:focusable="true">
 
-        <TextView
-            android:id="@+id/best_times_heading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/high_scores"
-            android:layout_marginTop="40dp"
-            android:textSize="24sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-        <ImageView
-            android:id="@+id/left_mine_image"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
-            android:src="@drawable/ic_mine"
-            app:layout_constraintEnd_toStartOf="@id/best_times_heading"
-            app:layout_constraintTop_toTopOf="@id/best_times_heading"
-            app:layout_constraintBottom_toBottomOf="@id/reset_times_button"/>
-
-
-        <ImageView
-            android:id="@+id/right_mine_image"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:src="@drawable/ic_mine"
-            app:layout_constraintStart_toEndOf="@id/best_times_heading"
-            app:layout_constraintTop_toTopOf="@id/best_times_heading"
-            app:layout_constraintBottom_toBottomOf="@id/reset_times_button"/>
-
-        <Button
-            android:id="@+id/reset_times_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/reset_all"
-            android:textAllCaps="false"
-            android:minHeight="0dp"
-            android:layout_marginTop="5dp"
-            android:background="@android:color/transparent"
-            android:onClick="@{() -> highScoresViewModel.clearButtonPressed()}"
-            app:layout_constraintTop_toBottomOf="@id/best_times_heading"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/difficulty_spinner"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/difficulty_selector"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            app:layout_constraintTop_toBottomOf="@id/reset_times_button"
-            app:layout_constraintStart_toStartOf="@id/left_mine_image"
-            app:layout_constraintEnd_toEndOf="@id/right_mine_image"/>
+            android:background="@color/teal"
+            app:tabTextAppearance="@style/tab_text"
+            app:tabSelectedTextColor="@android:color/white"
+            app:tabTextColor="@color/backgroundGrey"
+            app:tabIndicatorColor="@android:color/white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/best_times_header"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            app:layout_constraintStart_toStartOf="@id/best_times_recycler_view"
-            app:layout_constraintEnd_toEndOf="@id/best_times_recycler_view"
-            app:layout_constraintTop_toBottomOf="@id/difficulty_spinner">
-
-            <TextView
-                android:id="@+id/position_label"
-                android:layout_width="0dp"
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/position"
-                android:gravity="center"
-                android:textSize="16sp"
-                android:layout_marginTop="10dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintWidth_percent="0.33"/>
+                android:text="@string/beginner"/>
 
-            <TextView
-                android:id="@+id/name_label"
-                android:layout_width="0dp"
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/name"
-                android:gravity="center"
-                android:textSize="16sp"
-                app:layout_constraintTop_toTopOf="@id/position_label"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintStart_toEndOf="@id/position_label"
-                app:layout_constraintWidth_percent="0.33"/>
+                android:text="@string/intermediate"/>
 
-            <TextView
-                android:id="@+id/time_label"
-                android:layout_width="0dp"
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/time"
-                android:gravity="center"
-                android:textSize="16sp"
-                app:layout_constraintTop_toTopOf="@id/position_label"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintStart_toEndOf="@id/name_label"
-                app:layout_constraintWidth_percent="0.33"/>
+                android:text="@string/advanced"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.tabs.TabLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/best_times_recycler_view"
@@ -131,7 +56,7 @@
             app:highScores="@{highScoresViewModel.highScores}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/best_times_header"
+            app:layout_constraintTop_toBottomOf="@id/difficulty_selector"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

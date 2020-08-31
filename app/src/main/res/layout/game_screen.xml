@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:clickable="true"
         android:focusable="true"
-        android:background="@android:color/white">
+        android:background="@color/backgroundGrey">
 
         <TextView
             android:id="@+id/number_of_flags_textview"
