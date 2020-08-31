@@ -25,6 +25,7 @@ class GameScreenFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
+        (activity as? AppCompatActivity)?.supportActionBar?.setShowHideAnimationEnabled(false)
         (activity as? AppCompatActivity)?.supportActionBar?.show()
 
         binding = DataBindingUtil.inflate(inflater, R.layout.game_screen, container, false)

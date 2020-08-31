@@ -23,6 +23,7 @@ class HighScoresFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
+        (activity as? AppCompatActivity)?.supportActionBar?.setShowHideAnimationEnabled(false)
         (activity as? AppCompatActivity)?.supportActionBar?.show()
 
         binding = DataBindingUtil.inflate(inflater, R.layout.high_scores_screen, container, false)
