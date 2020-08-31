@@ -3,8 +3,8 @@ package com.example.android_minesweeper.view_models
 import androidx.databinding.Bindable
 import androidx.databinding.library.baseAdapters.BR
 import com.example.android_minesweeper.Difficulty
-import com.example.android_minesweeper.database.HighScore
-import com.example.android_minesweeper.database.HighScoreDao
+import com.example.android_minesweeper.models.HighScore
+import com.example.android_minesweeper.models.HighScoreDao
 import kotlinx.coroutines.*
 
 class HighScoresViewModel(private val highScoreDao: HighScoreDao) : BaseViewModel() {

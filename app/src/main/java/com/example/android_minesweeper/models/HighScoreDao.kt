@@ -1,4 +1,4 @@
-package com.example.android_minesweeper.database
+package com.example.android_minesweeper.models
 
 import androidx.room.Dao
 import androidx.room.Insert

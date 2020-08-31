@@ -1,4 +1,4 @@
-package com.example.android_minesweeper.database
+package com.example.android_minesweeper.models
 
 import android.content.Context
 import androidx.room.*
@@ -19,7 +19,8 @@ abstract class AppDatabase : RoomDatabase() {
                     INSTANCE = Room.databaseBuilder(
                         context.applicationContext,
                         AppDatabase::class.java,
-                        databaseName)
+                        databaseName
+                    )
                         .fallbackToDestructiveMigration()
                         .build()
                 }

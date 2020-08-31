@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.android_minesweeper.R
-import com.example.android_minesweeper.database.AppDatabase
+import com.example.android_minesweeper.models.AppDatabase
 import com.example.android_minesweeper.databinding.HighScoresScreenBinding
 import com.example.android_minesweeper.view_models.HighScoresViewModel
 

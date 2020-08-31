@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.android_minesweeper.screens.game.GameBoardAdapter
 import com.example.android_minesweeper.view_models.GameViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.android_minesweeper.database.HighScore
+import com.example.android_minesweeper.models.HighScore
 import com.example.android_minesweeper.models.GridCell
 import com.example.android_minesweeper.screens.best_times.HighScoresAdapter
 import com.example.android_minesweeper.view_models.HighScoresViewModel

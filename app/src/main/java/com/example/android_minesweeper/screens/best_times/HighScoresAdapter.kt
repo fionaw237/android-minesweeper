@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android_minesweeper.R
-import com.example.android_minesweeper.database.HighScore
+import com.example.android_minesweeper.models.HighScore
 import com.example.android_minesweeper.databinding.HighScoreCellBinding
 
 class HighScoresAdapter() : RecyclerView.Adapter<HighScoreViewHolder>() {

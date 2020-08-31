@@ -1,4 +1,4 @@
-package com.example.android_minesweeper.database
+package com.example.android_minesweeper.models
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

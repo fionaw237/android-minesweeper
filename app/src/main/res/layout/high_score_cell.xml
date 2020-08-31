@@ -6,7 +6,7 @@
     <data>
        <variable
            name="highScoreModel"
-           type="com.example.android_minesweeper.database.HighScore" />
+           type="com.example.android_minesweeper.models.HighScore" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
