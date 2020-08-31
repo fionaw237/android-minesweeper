@@ -53,13 +53,13 @@ class HighScoresViewModel(private val highScoreDao: HighScoreDao) : BaseViewMode
         }
     }
 
-    fun clearButtonPressed() {
-        uiScope.launch {
-            clearScores()
-            //TODO: Add repository layer which the view model can observe?
-            highScores = listOf()
-        }
-    }
+//    fun clearButtonPressed() {
+//        uiScope.launch {
+//            clearScores()
+//            //TODO: Add repository layer which the view model can observe?
+//            highScores = listOf()
+//        }
+//    }
 
     private suspend fun clearScores() {
         withContext(Dispatchers.IO) {

@@ -16,41 +16,15 @@
         android:clickable="true"
         android:focusable="true">
 
-        <TextView
-            android:id="@+id/best_times_heading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/best_times"
-            android:layout_marginTop="40dp"
-            android:textSize="24sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-        <Button
-            android:id="@+id/reset_times_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/reset_all"
-            android:textAllCaps="false"
-            android:minHeight="0dp"
-            android:layout_marginTop="5dp"
-            android:background="@android:color/transparent"
-            android:onClick="@{() -> highScoresViewModel.clearButtonPressed()}"
-            app:layout_constraintTop_toBottomOf="@id/best_times_heading"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/difficulty_selector"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
             android:background="@color/teal"
             app:tabSelectedTextColor="@android:color/white"
             app:tabTextColor="@color/backgroundGrey"
             app:tabIndicatorColor="@android:color/white"
-            app:layout_constraintTop_toBottomOf="@id/reset_times_button"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 

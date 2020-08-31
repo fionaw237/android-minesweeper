@@ -22,7 +22,7 @@ class HighScoresFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.high_scores_screen, container, false)
-        setUpDifficultySpinner()
+//        setUpDifficultySpinner()
 
 //        binding.difficultySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 //            override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -45,16 +45,16 @@ class HighScoresFragment : Fragment() {
         return binding.root
     }
 
-    private fun setUpDifficultySpinner() {
-        context?.let { context ->
-            ArrayAdapter.createFromResource(
-                context,
-                R.array.difficulties,
-                android.R.layout.simple_spinner_item
-            ).also { adapter ->
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//    private fun setUpDifficultySpinner() {
+//        context?.let { context ->
+//            ArrayAdapter.createFromResource(
+//                context,
+//                R.array.difficulties,
+//                android.R.layout.simple_spinner_item
+//            ).also { adapter ->
+//                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 //                binding.difficultySpinner.adapter = adapter
-            }
-        }
-    }
+//            }
+//        }
+//    }
 }
