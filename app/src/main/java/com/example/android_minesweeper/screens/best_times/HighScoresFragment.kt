@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -21,6 +22,9 @@ class HighScoresFragment : Fragment() {
     private lateinit var viewModelFactory: HighScoresViewModelFactory
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+
+        (activity as? AppCompatActivity)?.supportActionBar?.show()
+
         binding = DataBindingUtil.inflate(inflater, R.layout.high_scores_screen, container, false)
 //        setUpDifficultySpinner()
 
