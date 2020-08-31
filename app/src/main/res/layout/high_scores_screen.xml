@@ -27,29 +27,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <ImageView
-            android:id="@+id/left_mine_image"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
-            android:src="@drawable/ic_mine"
-            app:layout_constraintEnd_toStartOf="@id/best_times_heading"
-            app:layout_constraintTop_toTopOf="@id/best_times_heading"
-            app:layout_constraintBottom_toBottomOf="@id/reset_times_button"/>
-
-
-        <ImageView
-            android:id="@+id/right_mine_image"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:src="@drawable/ic_mine"
-            app:layout_constraintStart_toEndOf="@id/best_times_heading"
-            app:layout_constraintTop_toTopOf="@id/best_times_heading"
-            app:layout_constraintBottom_toBottomOf="@id/reset_times_button"/>
-
         <Button
             android:id="@+id/reset_times_button"
             android:layout_width="wrap_content"
@@ -69,6 +46,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
+            android:background="@color/teal"
+            app:tabSelectedTextColor="@android:color/white"
+            app:tabTextColor="@color/backgroundGrey"
+            app:tabIndicatorColor="@android:color/white"
             app:layout_constraintTop_toBottomOf="@id/reset_times_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
