@@ -3,6 +3,7 @@ package com.example.android_minesweeper.screens.game
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.android_minesweeper.Difficulty
+import com.example.android_minesweeper.view_models.GameViewModel
 
 class GameViewModelFactory(private val difficulty: Difficulty) : ViewModelProvider.Factory {
 

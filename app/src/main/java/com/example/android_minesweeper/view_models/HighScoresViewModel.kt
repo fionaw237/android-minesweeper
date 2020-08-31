@@ -1,11 +1,10 @@
-package com.example.android_minesweeper.screens.best_times
+package com.example.android_minesweeper.view_models
 
 import androidx.databinding.Bindable
 import androidx.databinding.library.baseAdapters.BR
 import com.example.android_minesweeper.Difficulty
 import com.example.android_minesweeper.database.HighScore
 import com.example.android_minesweeper.database.HighScoreDao
-import com.example.android_minesweeper.screens.BaseViewModel
 import kotlinx.coroutines.*
 
 class HighScoresViewModel(private val highScoreDao: HighScoreDao) : BaseViewModel() {
@@ -14,7 +13,28 @@ class HighScoresViewModel(private val highScoreDao: HighScoreDao) : BaseViewMode
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     @Bindable
-    var highScores: List<HighScore> = listOf()
+    var highScores: List<HighScore> = listOf(
+        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
+        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
+        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
+        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
+        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
+        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
+        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
+        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
+        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
+        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
+        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
+        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
+        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
+        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
+        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
+        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
+        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
+        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
+        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
+        HighScore(difficulty = "Beginner", name = "Gus", time="5s")
+    )
     set(value) {
         field = value
         notifyPropertyChanged(BR.highScores)

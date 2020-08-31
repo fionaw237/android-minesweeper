@@ -3,6 +3,7 @@ package com.example.android_minesweeper.screens.best_times
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.android_minesweeper.database.HighScoreDao
+import com.example.android_minesweeper.view_models.HighScoresViewModel
 
 class HighScoresViewModelFactory(private val highScoreDao: HighScoreDao) : ViewModelProvider.Factory {
 

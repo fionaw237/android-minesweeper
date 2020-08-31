@@ -4,7 +4,7 @@
     <data>
         <variable
             name="gameViewModel"
-            type="com.example.android_minesweeper.screens.game.GameViewModel" />
+            type="com.example.android_minesweeper.view_models.GameViewModel" />
 
         <variable
             name="gridCell"

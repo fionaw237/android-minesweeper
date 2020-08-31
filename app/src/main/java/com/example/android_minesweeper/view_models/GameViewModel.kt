@@ -1,4 +1,4 @@
-package com.example.android_minesweeper.screens.game
+package com.example.android_minesweeper.view_models
 
 import androidx.databinding.Bindable
 import androidx.databinding.library.baseAdapters.BR
@@ -8,7 +8,6 @@ import com.example.android_minesweeper.Difficulty
 import com.example.android_minesweeper.FlagAction
 import com.example.android_minesweeper.GameState
 import com.example.android_minesweeper.UILiveDataResponse
-import com.example.android_minesweeper.screens.BaseViewModel
 
 class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
 

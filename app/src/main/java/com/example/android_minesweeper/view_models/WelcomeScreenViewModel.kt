@@ -1,4 +1,4 @@
-package com.example.android_minesweeper.screens.welcome
+package com.example.android_minesweeper.view_models
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

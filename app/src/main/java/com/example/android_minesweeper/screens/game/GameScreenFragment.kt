@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.android_minesweeper.R
 import com.example.android_minesweeper.UILiveDataResponse
 import com.example.android_minesweeper.databinding.GameScreenBinding
+import com.example.android_minesweeper.view_models.GameViewModel
 
 class GameScreenFragment : Fragment() {
 

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="highScoresViewModel"
-            type="com.example.android_minesweeper.screens.best_times.HighScoresViewModel" />
+            type="com.example.android_minesweeper.view_models.HighScoresViewModel" />
         <import type="com.example.android_minesweeper.Difficulty"/>
     </data>
 

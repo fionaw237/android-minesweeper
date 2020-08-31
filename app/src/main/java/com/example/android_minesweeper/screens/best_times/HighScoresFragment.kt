@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -13,7 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.android_minesweeper.R
 import com.example.android_minesweeper.database.AppDatabase
 import com.example.android_minesweeper.databinding.HighScoresScreenBinding
-import com.example.android_minesweeper.getDifficultyEnum
+import com.example.android_minesweeper.view_models.HighScoresViewModel
 
 class HighScoresFragment : Fragment() {
 

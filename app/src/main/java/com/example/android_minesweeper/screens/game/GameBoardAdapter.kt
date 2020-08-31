@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.android_minesweeper.R
 import com.example.android_minesweeper.databinding.GridCellBinding
 import com.example.android_minesweeper.models.GridCell
+import com.example.android_minesweeper.view_models.GameViewModel
 import kotlinx.android.synthetic.main.grid_cell.view.*
 
 class GameBoardAdapter(val gameViewModel: GameViewModel) : RecyclerView.Adapter<GameBoardAdapter.GridCellViewHolder>() {
