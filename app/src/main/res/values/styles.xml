@@ -2,6 +2,7 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <item name="fontFamily">@font/alegreya_sans_sc</item>
         <item name="colorPrimary">@color/teal</item>
         <item name="colorPrimaryDark">@color/teal</item>
         <item name="colorAccent">@color/colorAccent</item>
