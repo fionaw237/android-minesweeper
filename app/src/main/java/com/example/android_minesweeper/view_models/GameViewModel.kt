@@ -11,6 +11,8 @@ import com.example.android_minesweeper.UILiveDataResponse
 import com.example.android_minesweeper.models.HighScore
 import com.example.android_minesweeper.models.HighScoreDao
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class GameViewModel(private val difficulty: Difficulty, private val highScoreDao: HighScoreDao) : BaseViewModel() {
@@ -262,17 +264,31 @@ class GameViewModel(private val difficulty: Difficulty, private val highScoreDao
     }
 
     fun isNewBestTime(): Boolean {
-        
-        return true
+        var result = true
+        GlobalScope.launch {
+            getScoresFromDatabase().also { scores ->
+                println(scores)
+                if (scores.count() >= 10 && scores.last().time.toLong() < gameTime) {
+                    result = false
+                }
+            }
+        }
+        return result
     }
 
-    private fun getScoresFromDatabase(): List<HighScore>? {
-        return null
+    private suspend fun getScoresFromDatabase(): List<HighScore> {
+        return withContext(Dispatchers.IO) {
+            highScoreDao.getByDifficulty(difficulty = difficulty.value)
+        }
     }
 
     fun gameWonAlertButtonPressed(enteredName: String?) {
         enteredName?.let { name ->
-            // store name and time
+            GlobalScope.launch {
+                highScoreDao.insert(
+                    HighScore(difficulty = difficulty.value, name = name, time = gameTime.toString())
+                )
+            }
         }
     }
 
