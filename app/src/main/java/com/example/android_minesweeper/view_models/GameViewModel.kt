@@ -248,12 +248,30 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
         gameState = GameState.WON
         disableCellInteraction()
         responseLiveData.value = UILiveDataResponse.StopTimer
-        responseLiveData.value = UILiveDataResponse.ShowGameWonMessage
+        responseLiveData.value = UILiveDataResponse.ShowGameWonMessage(winningGameTimeInMinutesAndSeconds())
     }
 
     private fun disableCellInteraction() {
         gridCells.forEach { cell ->
             cell.disable()
         }
+    }
+
+    fun isNewBestTime(): Boolean {
+        //TODO: Implement check for new best time
+        return false
+    }
+
+    fun gameWonAlertButtonPressed() {
+
+    }
+
+    private fun winningGameTimeInMinutesAndSeconds(): String {
+        val gameTimeInSeconds = gameTime / 1000
+        val minutes = gameTimeInSeconds / 60
+        val seconds = gameTimeInSeconds % 60
+        val minutesString = if (minutes < 10) "0${minutes}" else "${minutes}"
+        val secondsString = if (seconds < 10) "0${seconds}" else "${seconds}"
+        return "${minutesString}:${secondsString}"
     }
 }

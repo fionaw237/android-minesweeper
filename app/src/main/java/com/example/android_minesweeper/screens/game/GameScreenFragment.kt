@@ -6,6 +6,7 @@ import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Chronometer
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -15,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.android_minesweeper.R
 import com.example.android_minesweeper.UILiveDataResponse
 import com.example.android_minesweeper.databinding.GameScreenBinding
+import com.example.android_minesweeper.databinding.GameWonDialogBinding
 import com.example.android_minesweeper.view_models.GameViewModel
 
 class GameScreenFragment : Fragment() {
@@ -64,14 +66,41 @@ class GameScreenFragment : Fragment() {
                         }
                     }
                     is UILiveDataResponse.ShowGameWonMessage -> {
-                        with(AlertDialog.Builder(context)) {
-                            setTitle("You won!")
-                            setMessage("Your time was ${viewModel.gameTime / 1000} seconds.")
-                            setCancelable(false)
-                            setPositiveButton("OK") { dialog, _ ->
-                                dialog.cancel()
+
+                        DataBindingUtil.inflate<GameWonDialogBinding>(
+                            layoutInflater,
+                            R.layout.game_won_dialog,
+                            view as? ViewGroup,
+                            false
+                        ).also { binding ->
+                            val newBestTime = viewModel.isNewBestTime()
+
+                            binding.title = getString(
+                                when (newBestTime) {
+                                    true -> R.string.new_best_time_message
+                                    false -> R.string.you_won_message
+                                }
+                            )
+                            binding.buttonTitle = getString(
+                                when (newBestTime) {
+                                    true -> R.string.submit
+                                    false -> R.string.ok
+                                }
+                            )
+                            binding.timeMessage = "Your time was ${result.time}"
+                            binding.newHighScore = newBestTime
+
+                            AlertDialog.Builder(context).create().also { dialog ->
+                                dialog.setView(binding.root)
+                                dialog.setCancelable(false)
+                                dialog.show()
+
+                                binding.root.findViewById<Button>(R.id.game_won_alert_button)
+                                    .setOnClickListener {
+                                        viewModel.gameWonAlertButtonPressed()
+                                        dialog.dismiss()
+                                    }
                             }
-                            show()
                         }
                     }
                     else -> {}
