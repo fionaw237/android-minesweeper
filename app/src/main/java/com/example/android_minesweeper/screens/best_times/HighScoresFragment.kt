@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.android_minesweeper.R
 import com.example.android_minesweeper.models.AppDatabase
 import com.example.android_minesweeper.databinding.HighScoresScreenBinding
+import com.example.android_minesweeper.screens.game.GameScreenFragmentArgs
 import com.example.android_minesweeper.view_models.HighScoresViewModel
 
 class HighScoresFragment : Fragment() {
@@ -25,7 +26,8 @@ class HighScoresFragment : Fragment() {
         (activity as? AppCompatActivity)?.supportActionBar?.show()
 
         binding = DataBindingUtil.inflate(inflater, R.layout.high_scores_screen, container, false)
-//        setUpDifficultySpinner()
+
+        val defaultDifficulty = HighScoresFragmentArgs.fromBundle(arguments!!).difficulty
 
 //        binding.difficultySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 //            override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -48,16 +50,5 @@ class HighScoresFragment : Fragment() {
         return binding.root
     }
 
-//    private fun setUpDifficultySpinner() {
-//        context?.let { context ->
-//            ArrayAdapter.createFromResource(
-//                context,
-//                R.array.difficulties,
-//                android.R.layout.simple_spinner_item
-//            ).also { adapter ->
-//                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//                binding.difficultySpinner.adapter = adapter
-//            }
-//        }
-//    }
+
 }

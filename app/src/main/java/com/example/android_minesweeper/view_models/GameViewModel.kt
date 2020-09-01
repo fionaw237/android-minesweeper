@@ -56,6 +56,10 @@ class GameViewModel(private val difficulty: Difficulty, private val highScoreDao
         setUpGame()
     }
 
+    fun doneNavigating() {
+        responseLiveData.value = null
+    }
+
     private fun setUpGame() {
         timerStarted = false
         gameTime = 0L
@@ -289,6 +293,7 @@ class GameViewModel(private val difficulty: Difficulty, private val highScoreDao
                     HighScore(difficulty = difficulty.value, name = name, time = gameTime.toString())
                 )
             }
+            responseLiveData.value = UILiveDataResponse.NavigateToHighScores(difficulty)
         }
     }
 

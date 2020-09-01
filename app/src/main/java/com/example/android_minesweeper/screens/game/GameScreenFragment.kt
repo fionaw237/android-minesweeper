@@ -13,11 +13,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.example.android_minesweeper.R
 import com.example.android_minesweeper.UILiveDataResponse
 import com.example.android_minesweeper.databinding.GameScreenBinding
 import com.example.android_minesweeper.databinding.GameWonDialogBinding
 import com.example.android_minesweeper.models.AppDatabase
+import com.example.android_minesweeper.screens.welcome.WelcomeScreenFragmentDirections
 import com.example.android_minesweeper.view_models.GameViewModel
 
 class GameScreenFragment : Fragment() {
@@ -109,8 +111,13 @@ class GameScreenFragment : Fragment() {
                             }
                         }
                     }
-                    else -> {
+                    is UILiveDataResponse.NavigateToHighScores -> {
+                        this.findNavController().navigate(
+                            GameScreenFragmentDirections.actionGameScreenFragmentToBestTimesFragment(result.difficulty)
+                        )
+                        viewModel.doneNavigating()
                     }
+                    else -> {}
                 }
             }
         })
