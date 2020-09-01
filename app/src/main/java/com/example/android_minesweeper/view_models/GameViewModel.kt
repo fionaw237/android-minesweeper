@@ -8,8 +8,12 @@ import com.example.android_minesweeper.Difficulty
 import com.example.android_minesweeper.FlagAction
 import com.example.android_minesweeper.GameState
 import com.example.android_minesweeper.UILiveDataResponse
+import com.example.android_minesweeper.models.HighScore
+import com.example.android_minesweeper.models.HighScoreDao
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
-class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
+class GameViewModel(private val difficulty: Difficulty, private val highScoreDao: HighScoreDao) : BaseViewModel() {
 
     var responseLiveData = MutableLiveData<UILiveDataResponse>()
 
@@ -258,12 +262,18 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
     }
 
     fun isNewBestTime(): Boolean {
-        //TODO: Implement check for new best time
-        return false
+        
+        return true
     }
 
-    fun gameWonAlertButtonPressed() {
+    private fun getScoresFromDatabase(): List<HighScore>? {
+        return null
+    }
 
+    fun gameWonAlertButtonPressed(enteredName: String?) {
+        enteredName?.let { name ->
+            // store name and time
+        }
     }
 
     private fun winningGameTimeInMinutesAndSeconds(): String {

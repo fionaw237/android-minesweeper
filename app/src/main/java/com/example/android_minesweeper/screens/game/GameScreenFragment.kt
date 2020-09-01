@@ -17,6 +17,7 @@ import com.example.android_minesweeper.R
 import com.example.android_minesweeper.UILiveDataResponse
 import com.example.android_minesweeper.databinding.GameScreenBinding
 import com.example.android_minesweeper.databinding.GameWonDialogBinding
+import com.example.android_minesweeper.models.AppDatabase
 import com.example.android_minesweeper.view_models.GameViewModel
 
 class GameScreenFragment : Fragment() {
@@ -32,7 +33,9 @@ class GameScreenFragment : Fragment() {
         (activity as? AppCompatActivity)?.supportActionBar?.show()
 
         binding = DataBindingUtil.inflate(inflater, R.layout.game_screen, container, false)
-        viewModelFactory = GameViewModelFactory(GameScreenFragmentArgs.fromBundle(arguments!!).difficulty)
+
+        val dataSource = AppDatabase.getInstance(requireNotNull(this.activity).application).highScoreDao
+        viewModelFactory = GameViewModelFactory(GameScreenFragmentArgs.fromBundle(arguments!!).difficulty, dataSource)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(GameViewModel::class.java)
         binding.gameViewModel = viewModel
         binding.lifecycleOwner = this
@@ -95,15 +98,19 @@ class GameScreenFragment : Fragment() {
                                 dialog.setCancelable(false)
                                 dialog.show()
 
-                                binding.root.findViewById<Button>(R.id.game_won_alert_button)
-                                    .setOnClickListener {
-                                        viewModel.gameWonAlertButtonPressed()
-                                        dialog.dismiss()
+                                binding.gameWonAlertButton.setOnClickListener {
+                                    var enteredName: String? = null
+                                    if (binding.newBestTimeInput.visibility == View.VISIBLE) {
+                                        enteredName = binding.newBestTimeInput.text.toString()
                                     }
+                                    viewModel.gameWonAlertButtonPressed(enteredName = enteredName)
+                                    dialog.dismiss()
+                                }
                             }
                         }
                     }
-                    else -> {}
+                    else -> {
+                    }
                 }
             }
         })
