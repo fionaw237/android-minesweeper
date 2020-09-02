@@ -1,5 +1,6 @@
 package com.example.android_minesweeper.screens.game
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
 import android.os.SystemClock
@@ -29,6 +30,7 @@ class GameScreenFragment : Fragment() {
     private lateinit var viewModelFactory: GameViewModelFactory
     private lateinit var timer: Chronometer
 
+    @SuppressLint("RestrictedApi")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
         (activity as? AppCompatActivity)?.supportActionBar?.setShowHideAnimationEnabled(false)

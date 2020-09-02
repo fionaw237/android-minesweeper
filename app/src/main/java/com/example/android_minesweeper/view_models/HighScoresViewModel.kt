@@ -13,51 +13,18 @@ class HighScoresViewModel(private val highScoreDao: HighScoreDao) : BaseViewMode
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     @Bindable
-    var highScores: List<HighScore> = listOf(
-        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
-        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
-        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
-        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
-        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
-        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
-        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
-        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
-        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
-        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
-        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
-        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
-        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
-        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
-        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
-        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
-        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
-        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
-        HighScore(difficulty = "Beginner", name = "Gus", time="5s"),
-        HighScore(difficulty = "Beginner", name = "Gus", time="5s")
-    )
+    var highScores: List<HighScore> = listOf()
     set(value) {
         field = value
         notifyPropertyChanged(BR.highScores)
     }
-
-    //        listOf(
-//            HighScore(difficulty = "Beginner", name = "Eva", time = "20s")
-//        ).forEach {
-//            uiScope.launch {
-//                addHighScoreToDatabase(it)
-//            }
-//        }.also {
-//            uiScope.launch {
-//                highScores = getScoresFromDatabase(Difficulty.BEGINNER)
-//            }
-//        }
 
     // TODO: Later, store high scores in a map, once the fragment has loaded -
     //  then when a difficulty is chosen from the dropdown, just grab the relevant data from the map
 
     fun difficultyChosenToDisplay(difficulty: Difficulty) {
         uiScope.launch {
-            highScores = getScoresFromDatabase(difficulty)
+            highScores = getScoresFromDatabase(difficulty).sortedByDescending { it.time }
         }
     }
 

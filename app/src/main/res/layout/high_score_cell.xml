@@ -4,9 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <variable
+            name="viewModel"
+            type="com.example.android_minesweeper.view_models.HighScoresViewModel" />
        <variable
            name="highScoreModel"
            type="com.example.android_minesweeper.models.HighScore" />
+        <variable
+            name="ranking"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,7 +23,7 @@
             android:id="@+id/position_display"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="1"
+            android:text="@{ranking}"
             android:gravity="center"
             android:textSize="18sp"
             android:fontFamily="@font/alegreya_sans_sc"

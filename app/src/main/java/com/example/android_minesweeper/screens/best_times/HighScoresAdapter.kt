@@ -27,6 +27,7 @@ class HighScoresAdapter() : RecyclerView.Adapter<HighScoreViewHolder>() {
 
     override fun onBindViewHolder(holder: HighScoreViewHolder, position: Int) {
         holder.bind.highScoreModel = data[position]
+        holder.bind.ranking = "${position + 1}"
     }
 }
 
