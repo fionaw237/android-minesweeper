@@ -7,6 +7,7 @@ import com.example.android_minesweeper.*
 import com.example.android_minesweeper.models.GridCell
 import com.example.android_minesweeper.models.HighScore
 import com.example.android_minesweeper.models.HighScoreDao
+import com.example.android_minesweeper.models.HighScoresRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -15,6 +16,7 @@ import kotlinx.coroutines.withContext
 class GameViewModel(private val difficulty: Difficulty, private val highScoreDao: HighScoreDao) : BaseViewModel() {
 
     var responseLiveData = MutableLiveData<UILiveDataResponse>()
+    private val highScoresRepository = HighScoresRepository(highScoreDao)
 
     var numberOfMines: Int = 0
         set(value) {
@@ -267,7 +269,7 @@ class GameViewModel(private val difficulty: Difficulty, private val highScoreDao
     fun isNewBestTime(): Boolean {
         var result = true
         GlobalScope.launch {
-            getScoresFromDatabase().also { scores ->
+            highScoresRepository.getScoresFromDatabase(difficulty).also { scores ->
                 if (scores.count() >= 10 && scores.last().time < gameTime) {
                     result = false
                 }
@@ -279,32 +281,10 @@ class GameViewModel(private val difficulty: Difficulty, private val highScoreDao
     fun gameWonAlertButtonPressed(enteredName: String?) {
         enteredName?.let { name ->
             GlobalScope.launch {
-                storeNewHighScore(name)
+                highScoresRepository.storeNewHighScore(HighScore(name = name, time = gameTime, difficulty = difficulty.value))
             }
             responseLiveData.value = UILiveDataResponse.NavigateToHighScores(difficulty, null)
         }
     }
 
-    private suspend fun getScoresFromDatabase(): List<HighScore> {
-        return withContext(Dispatchers.IO) {
-            highScoreDao.getByDifficulty(difficulty = difficulty.value).sortedBy { it.time }
-        }
-    }
-
-    private suspend fun storeNewHighScore(name: String) {
-        getScoresFromDatabase().also { scores ->
-            if (scores.count() >= 10) {
-                // Update the lowest score with the new values
-                val scoreToUpdate = scores.last()
-                scoreToUpdate.name = name
-                scoreToUpdate.time = gameTime
-                highScoreDao.insert(scoreToUpdate)
-            } else {
-                // No low score exists - create new entry
-                highScoreDao.insert(
-                    HighScore(difficulty = difficulty.value, name = name, time = gameTime)
-                )
-            }
-        }
-    }
 }

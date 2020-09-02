@@ -6,12 +6,14 @@ import com.example.android_minesweeper.Difficulty
 import com.example.android_minesweeper.getDifficultyEnum
 import com.example.android_minesweeper.models.HighScore
 import com.example.android_minesweeper.models.HighScoreDao
+import com.example.android_minesweeper.models.HighScoresRepository
 import kotlinx.coroutines.*
 
 class HighScoresViewModel(private val highScoreDao: HighScoreDao) : BaseViewModel() {
 
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+    private val highScoresRepository = HighScoresRepository(highScoreDao)
 
     @Bindable
     var highScores: List<HighScore> = listOf()
@@ -25,34 +27,9 @@ class HighScoresViewModel(private val highScoreDao: HighScoreDao) : BaseViewMode
 
     fun difficultyChosenToDisplay(difficulty: Difficulty) {
         uiScope.launch {
-            highScores = getScoresFromDatabase(difficulty)
+            highScores = highScoresRepository.getScoresFromDatabase(difficulty)
         }
     }
-
-    private suspend fun getScoresFromDatabase(difficulty: Difficulty): List<HighScore> {
-        return withContext(Dispatchers.IO) {
-            highScoreDao.getByDifficulty(difficulty = difficulty.value).sortedBy { it.time }
-        }
-    }
-
-    fun storeNewHighScore(highScore: HighScore) {
-        GlobalScope.launch {
-            getScoresFromDatabase(highScore.difficulty.getDifficultyEnum()!!).also { scores ->
-                if (scores.count() >= 10) {
-                    // Update the lowest score with the new values
-                    val scoreToUpdate = scores.last()
-                    scoreToUpdate.name = highScore.name
-                    scoreToUpdate.time = highScore.time
-                    highScoreDao.insert(scoreToUpdate)
-                } else {
-                    // No low score exists - create new entry
-                    highScoreDao.insert(highScore)
-                }
-            }
-        }
-    }
-
-
 
 //    fun clearButtonPressed() {
 //        uiScope.launch {
@@ -62,11 +39,6 @@ class HighScoresViewModel(private val highScoreDao: HighScoreDao) : BaseViewMode
 //        }
 //    }
 
-    private suspend fun clearScores() {
-        withContext(Dispatchers.IO) {
-            highScoreDao.clear()
-        }
-    }
 
     override fun onCleared() {
         super.onCleared()
