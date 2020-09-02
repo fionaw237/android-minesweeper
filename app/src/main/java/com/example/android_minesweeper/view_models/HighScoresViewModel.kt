@@ -3,6 +3,7 @@ package com.example.android_minesweeper.view_models
 import androidx.databinding.Bindable
 import androidx.databinding.library.baseAdapters.BR
 import com.example.android_minesweeper.Difficulty
+import com.example.android_minesweeper.getDifficultyEnum
 import com.example.android_minesweeper.models.HighScore
 import com.example.android_minesweeper.models.HighScoreDao
 import kotlinx.coroutines.*
@@ -33,6 +34,25 @@ class HighScoresViewModel(private val highScoreDao: HighScoreDao) : BaseViewMode
             highScoreDao.getByDifficulty(difficulty = difficulty.value).sortedBy { it.time }
         }
     }
+
+    fun storeNewHighScore(highScore: HighScore) {
+        GlobalScope.launch {
+            getScoresFromDatabase(highScore.difficulty.getDifficultyEnum()!!).also { scores ->
+                if (scores.count() >= 10) {
+                    // Update the lowest score with the new values
+                    val scoreToUpdate = scores.last()
+                    scoreToUpdate.name = highScore.name
+                    scoreToUpdate.time = highScore.time
+                    highScoreDao.insert(scoreToUpdate)
+                } else {
+                    // No low score exists - create new entry
+                    highScoreDao.insert(highScore)
+                }
+            }
+        }
+    }
+
+
 
 //    fun clearButtonPressed() {
 //        uiScope.launch {

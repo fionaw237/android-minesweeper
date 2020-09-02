@@ -281,7 +281,7 @@ class GameViewModel(private val difficulty: Difficulty, private val highScoreDao
             GlobalScope.launch {
                 storeNewHighScore(name)
             }
-            responseLiveData.value = UILiveDataResponse.NavigateToHighScores(difficulty)
+            responseLiveData.value = UILiveDataResponse.NavigateToHighScores(difficulty, null)
         }
     }
 
