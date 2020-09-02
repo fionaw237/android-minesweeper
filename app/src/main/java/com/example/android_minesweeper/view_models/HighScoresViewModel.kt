@@ -24,19 +24,13 @@ class HighScoresViewModel(private val highScoreDao: HighScoreDao) : BaseViewMode
 
     fun difficultyChosenToDisplay(difficulty: Difficulty) {
         uiScope.launch {
-            highScores = getScoresFromDatabase(difficulty).sortedByDescending { it.time }
+            highScores = getScoresFromDatabase(difficulty)
         }
     }
 
     private suspend fun getScoresFromDatabase(difficulty: Difficulty): List<HighScore> {
         return withContext(Dispatchers.IO) {
-            highScoreDao.getByDifficulty(difficulty = difficulty.value)
-        }
-    }
-
-    private suspend fun addHighScoreToDatabase(highScore: HighScore) {
-        withContext(Dispatchers.IO) {
-            highScoreDao.insert(highScore)
+            highScoreDao.getByDifficulty(difficulty = difficulty.value).sortedBy { it.time }
         }
     }
 

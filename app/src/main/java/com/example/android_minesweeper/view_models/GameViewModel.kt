@@ -268,8 +268,7 @@ class GameViewModel(private val difficulty: Difficulty, private val highScoreDao
         var result = true
         GlobalScope.launch {
             getScoresFromDatabase().also { scores ->
-                println(scores)
-                if (scores.count() >= 10 && scores.last().time.toLong() < gameTime) {
+                if (scores.count() >= 10 && scores.last().time < gameTime) {
                     result = false
                 }
             }
@@ -277,20 +276,35 @@ class GameViewModel(private val difficulty: Difficulty, private val highScoreDao
         return result
     }
 
-    private suspend fun getScoresFromDatabase(): List<HighScore> {
-        return withContext(Dispatchers.IO) {
-            highScoreDao.getByDifficulty(difficulty = difficulty.value)
-        }
-    }
-
     fun gameWonAlertButtonPressed(enteredName: String?) {
         enteredName?.let { name ->
             GlobalScope.launch {
+                storeNewHighScore(name)
+            }
+            responseLiveData.value = UILiveDataResponse.NavigateToHighScores(difficulty)
+        }
+    }
+
+    private suspend fun getScoresFromDatabase(): List<HighScore> {
+        return withContext(Dispatchers.IO) {
+            highScoreDao.getByDifficulty(difficulty = difficulty.value).sortedBy { it.time }
+        }
+    }
+
+    private suspend fun storeNewHighScore(name: String) {
+        getScoresFromDatabase().also { scores ->
+            if (scores.count() >= 10) {
+                // Update the lowest score with the new values
+                val scoreToUpdate = scores.last()
+                scoreToUpdate.name = name
+                scoreToUpdate.time = gameTime
+                highScoreDao.insert(scoreToUpdate)
+            } else {
+                // No low score exists - create new entry
                 highScoreDao.insert(
                     HighScore(difficulty = difficulty.value, name = name, time = gameTime)
                 )
             }
-            responseLiveData.value = UILiveDataResponse.NavigateToHighScores(difficulty)
         }
     }
 }
