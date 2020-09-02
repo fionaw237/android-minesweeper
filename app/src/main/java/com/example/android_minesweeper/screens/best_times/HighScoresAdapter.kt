@@ -6,8 +6,10 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android_minesweeper.R
+import com.example.android_minesweeper.convertMillisecondsToMinutesAndSecondsString
 import com.example.android_minesweeper.models.HighScore
 import com.example.android_minesweeper.databinding.HighScoreCellBinding
+import com.example.android_minesweeper.models.HighScoreDisplay
 
 class HighScoresAdapter() : RecyclerView.Adapter<HighScoreViewHolder>() {
 
@@ -26,8 +28,7 @@ class HighScoresAdapter() : RecyclerView.Adapter<HighScoreViewHolder>() {
     override fun getItemCount() = data.size
 
     override fun onBindViewHolder(holder: HighScoreViewHolder, position: Int) {
-        holder.bind.highScoreModel = data[position]
-        holder.bind.ranking = "${position + 1}"
+        holder.bind.highScoreDisplayModel = HighScoreDisplay(highScore = data[position],  position = position + 1)
     }
 }
 

@@ -3,11 +3,8 @@ package com.example.android_minesweeper.view_models
 import androidx.databinding.Bindable
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.MutableLiveData
+import com.example.android_minesweeper.*
 import com.example.android_minesweeper.models.GridCell
-import com.example.android_minesweeper.Difficulty
-import com.example.android_minesweeper.FlagAction
-import com.example.android_minesweeper.GameState
-import com.example.android_minesweeper.UILiveDataResponse
 import com.example.android_minesweeper.models.HighScore
 import com.example.android_minesweeper.models.HighScoreDao
 import kotlinx.coroutines.Dispatchers
@@ -258,7 +255,7 @@ class GameViewModel(private val difficulty: Difficulty, private val highScoreDao
         gameState = GameState.WON
         disableCellInteraction()
         responseLiveData.value = UILiveDataResponse.StopTimer
-        responseLiveData.value = UILiveDataResponse.ShowGameWonMessage(winningGameTimeInMinutesAndSeconds())
+        responseLiveData.value = UILiveDataResponse.ShowGameWonMessage(gameTime.convertMillisecondsToMinutesAndSecondsString())
     }
 
     private fun disableCellInteraction() {
@@ -290,19 +287,10 @@ class GameViewModel(private val difficulty: Difficulty, private val highScoreDao
         enteredName?.let { name ->
             GlobalScope.launch {
                 highScoreDao.insert(
-                    HighScore(difficulty = difficulty.value, name = name, time = gameTime.toString())
+                    HighScore(difficulty = difficulty.value, name = name, time = gameTime)
                 )
             }
             responseLiveData.value = UILiveDataResponse.NavigateToHighScores(difficulty)
         }
-    }
-
-    private fun winningGameTimeInMinutesAndSeconds(): String {
-        val gameTimeInSeconds = gameTime / 1000
-        val minutes = gameTimeInSeconds / 60
-        val seconds = gameTimeInSeconds % 60
-        val minutesString = if (minutes < 10) "0${minutes}" else "${minutes}"
-        val secondsString = if (seconds < 10) "0${seconds}" else "${seconds}"
-        return "${minutesString}:${secondsString}"
     }
 }

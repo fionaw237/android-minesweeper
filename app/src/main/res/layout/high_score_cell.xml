@@ -5,14 +5,8 @@
 
     <data>
         <variable
-            name="viewModel"
-            type="com.example.android_minesweeper.view_models.HighScoresViewModel" />
-       <variable
-           name="highScoreModel"
-           type="com.example.android_minesweeper.models.HighScore" />
-        <variable
-            name="ranking"
-            type="String" />
+            name="highScoreDisplayModel"
+            type="com.example.android_minesweeper.models.HighScoreDisplay" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,7 +17,7 @@
             android:id="@+id/position_display"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{ranking}"
+            android:text="@{highScoreDisplayModel.ranking}"
             android:gravity="center"
             android:textSize="18sp"
             android:fontFamily="@font/alegreya_sans_sc"
@@ -39,7 +33,7 @@
             android:id="@+id/name_display"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{highScoreModel.name}"
+            android:text="@{highScoreDisplayModel.name}"
             android:fontFamily="@font/alegreya_sans_sc"
             android:gravity="center"
             android:textSize="18sp"
@@ -53,7 +47,7 @@
             android:id="@+id/time_display"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{highScoreModel.time}"
+            android:text="@{highScoreDisplayModel.time}"
             android:fontFamily="@font/alegreya_sans_sc"
             android:gravity="center"
             android:textSize="18sp"
