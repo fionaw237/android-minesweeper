@@ -14,4 +14,6 @@
     <string name="you_won_message">You won!</string>
     <string name="submit">Submit</string>
     <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete_confirmation">Are you sure you want to reset all best times?</string>
 </resources>
