@@ -10,7 +10,7 @@ import com.example.android_minesweeper.models.HighScoreDao
 import com.example.android_minesweeper.models.HighScoresRepository
 import kotlinx.coroutines.*
 
-class GameViewModel(private val difficulty: Difficulty, private val highScoreDao: HighScoreDao) : BaseViewModel() {
+class GameViewModel(private val difficulty: Difficulty, highScoreDao: HighScoreDao) : BaseViewModel() {
 
     var responseLiveData = MutableLiveData<UILiveDataResponse>()
     private val highScoresRepository = HighScoresRepository(highScoreDao)

@@ -8,7 +8,7 @@ import com.example.android_minesweeper.models.HighScoreDao
 import com.example.android_minesweeper.models.HighScoresRepository
 import kotlinx.coroutines.*
 
-class HighScoresViewModel(private val highScoreDao: HighScoreDao) : BaseViewModel() {
+class HighScoresViewModel(highScoreDao: HighScoreDao) : BaseViewModel() {
 
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
@@ -37,7 +37,6 @@ class HighScoresViewModel(private val highScoreDao: HighScoreDao) : BaseViewMode
 //            highScores = listOf()
 //        }
 //    }
-
 
     override fun onCleared() {
         super.onCleared()
