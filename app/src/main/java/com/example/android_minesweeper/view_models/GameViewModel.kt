@@ -265,17 +265,13 @@ class GameViewModel(private val difficulty: Difficulty, highScoreDao: HighScoreD
 
     fun gameWonAlertButtonPressed(enteredName: String?) {
         enteredName?.let { name ->
-            GlobalScope.launch {
-                highScoresRepository.storeNewHighScore(HighScore(name = name, time = gameTime, difficulty = difficulty.value))
-                withContext(Dispatchers.Main) {
-                    responseLiveData.value = UILiveDataResponse.NavigateToHighScores(difficulty, null)
-                }
-            }
+            highScoresRepository.storeNewHighScore(HighScore(name = name, time = gameTime, difficulty = difficulty.value))
+            responseLiveData.value = UILiveDataResponse.NavigateToHighScores(difficulty, null)
         }
     }
 
     fun checkForNewBestTime(): Boolean = runBlocking {
              highScoresRepository.isNewBestTime(gameTime, difficulty)
-        }
+    }
 
 }
