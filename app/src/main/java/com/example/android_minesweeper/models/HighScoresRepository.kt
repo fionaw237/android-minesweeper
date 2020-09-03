@@ -37,4 +37,13 @@ class HighScoresRepository(private val highScoreDao: HighScoreDao) {
             highScoreDao.clear()
         }
     }
+
+    suspend fun isNewBestTime(time: Long, difficulty: Difficulty): Boolean {
+        getScoresFromDatabase(difficulty).also { scores ->
+            if (scores.count() >= 10 && scores.last().time < time) {
+                return false
+            }
+        }
+        return true
+    }
 }

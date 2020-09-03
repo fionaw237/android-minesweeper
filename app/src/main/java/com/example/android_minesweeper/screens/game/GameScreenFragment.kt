@@ -80,7 +80,7 @@ class GameScreenFragment : Fragment() {
                             view as? ViewGroup,
                             false
                         ).also { binding ->
-                            val newBestTime = viewModel.isNewBestTime()
+                            val newBestTime = viewModel.checkForNewBestTime()
 
                             binding.title = getString(
                                 when (newBestTime) {
@@ -107,8 +107,8 @@ class GameScreenFragment : Fragment() {
                                     if (binding.newBestTimeInput.visibility == View.VISIBLE) {
                                         enteredName = binding.newBestTimeInput.text.toString()
                                     }
+                                    dialog.cancel()
                                     viewModel.gameWonAlertButtonPressed(enteredName = enteredName)
-                                    dialog.dismiss()
                                 }
                             }
                         }
