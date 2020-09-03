@@ -2,9 +2,7 @@ package com.example.android_minesweeper.screens.best_times
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -12,7 +10,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.android_minesweeper.R
 import com.example.android_minesweeper.models.AppDatabase
 import com.example.android_minesweeper.databinding.HighScoresScreenBinding
-import com.example.android_minesweeper.screens.game.GameScreenFragmentArgs
 import com.example.android_minesweeper.view_models.HighScoresViewModel
 
 class HighScoresFragment : Fragment() {
@@ -41,5 +38,21 @@ class HighScoresFragment : Fragment() {
         return binding.root
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.delete_best_times, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.delete_best_times_button) {
+            viewModel.deleteBestTimesButtonPressed()
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
 }

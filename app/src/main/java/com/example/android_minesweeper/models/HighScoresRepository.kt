@@ -32,7 +32,7 @@ class HighScoresRepository(private val highScoreDao: HighScoreDao) {
         }
     }
 
-    private suspend fun clearScores() {
+    suspend fun deleteScores() {
         withContext(Dispatchers.IO) {
             highScoreDao.clear()
         }

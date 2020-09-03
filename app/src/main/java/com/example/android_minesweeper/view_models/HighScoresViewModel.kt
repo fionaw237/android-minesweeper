@@ -30,13 +30,12 @@ class HighScoresViewModel(highScoreDao: HighScoreDao) : BaseViewModel() {
         }
     }
 
-//    fun clearButtonPressed() {
-//        uiScope.launch {
-//            clearScores()
-//            //TODO: Add repository layer which the view model can observe?
-//            highScores = listOf()
-//        }
-//    }
+    fun deleteBestTimesButtonPressed() {
+        uiScope.launch {
+            highScoresRepository.deleteScores()
+            highScores = listOf()
+        }
+    }
 
     override fun onCleared() {
         super.onCleared()
