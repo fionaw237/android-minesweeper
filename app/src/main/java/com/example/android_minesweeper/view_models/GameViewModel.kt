@@ -67,7 +67,7 @@ class GameViewModel(private val difficulty: Difficulty, highScoreDao: HighScoreD
         numberOfMines = when (difficulty) {
             Difficulty.BEGINNER -> 5
             Difficulty.INTERMEDIATE -> 8
-            Difficulty.ADVANCED -> 12
+            Difficulty.ADVANCED -> 2
         }
     }
 

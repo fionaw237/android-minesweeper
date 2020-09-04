@@ -15,6 +15,9 @@ class HighScoresViewModel(highScoreDao: HighScoreDao) : BaseViewModel() {
     private val highScoresRepository = HighScoresRepository(highScoreDao)
 
     @Bindable
+    var defaultDifficulty = Difficulty.BEGINNER
+
+    @Bindable
     var highScores: MutableMap<Difficulty, List<HighScore>> = mutableMapOf()
 
     fun getBestTimes() {

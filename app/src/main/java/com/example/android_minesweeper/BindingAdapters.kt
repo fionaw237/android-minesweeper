@@ -102,3 +102,15 @@ fun setPagerData(pager: ViewPager2, bestTimes: MutableMap<Difficulty, List<HighS
         adapter.bestTimes = bestTimes
     }
 }
+
+@BindingAdapter("defaultPage")
+fun setDefaultPage(pager: ViewPager2, difficulty: Difficulty) {
+    pager.setCurrentItem(
+        when (difficulty) {
+            Difficulty.BEGINNER -> 0
+            Difficulty.INTERMEDIATE -> 1
+            else -> 2
+        },
+        false
+    )
+}
