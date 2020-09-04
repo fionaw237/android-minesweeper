@@ -15,25 +15,21 @@ class HighScoresViewModel(highScoreDao: HighScoreDao) : BaseViewModel() {
     private val highScoresRepository = HighScoresRepository(highScoreDao)
 
     @Bindable
-    var highScores: List<HighScore> = listOf()
-    set(value) {
-        field = value
-        notifyPropertyChanged(BR.highScores)
-    }
+    var highScores: MutableMap<Difficulty, List<HighScore>> = mutableMapOf()
 
-    // TODO: Later, store high scores in a map, once the fragment has loaded -
-    //  then when a difficulty is chosen from the dropdown, just grab the relevant data from the map
-
-    fun difficultyChosenToDisplay(difficulty: Difficulty) {
+    fun getBestTimes() {
         uiScope.launch {
-            highScores = highScoresRepository.getScoresFromDatabase(difficulty)
+            Difficulty.values().forEach { difficulty ->
+                highScores[difficulty] = highScoresRepository.getScoresFromDatabase(difficulty)
+            }
+            notifyPropertyChanged(BR.highScores)
         }
     }
 
     fun deleteBestTimesButtonPressed() {
         uiScope.launch {
             highScoresRepository.deleteScores()
-            highScores = listOf()
+            highScores = mutableMapOf()
         }
     }
 
@@ -41,4 +37,11 @@ class HighScoresViewModel(highScoreDao: HighScoreDao) : BaseViewModel() {
         super.onCleared()
         viewModelJob.cancel()
     }
+
+    fun difficultyForAdapterPosition(position: Int) =
+        when (position) {
+            0 -> Difficulty.BEGINNER
+            1 -> Difficulty.INTERMEDIATE
+            else -> Difficulty.ADVANCED
+        }
 }

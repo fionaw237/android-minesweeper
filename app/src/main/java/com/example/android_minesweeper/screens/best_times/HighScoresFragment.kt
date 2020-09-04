@@ -40,8 +40,7 @@ class HighScoresFragment : Fragment() {
         binding.highScoresViewModel = viewModel
         binding.lifecycleOwner = this
 
-        val defaultDifficulty = HighScoresFragmentArgs.fromBundle(arguments!!).difficulty
-        viewModel.difficultyChosenToDisplay(defaultDifficulty)
+        viewModel.getBestTimes()
 
         return binding.root
     }

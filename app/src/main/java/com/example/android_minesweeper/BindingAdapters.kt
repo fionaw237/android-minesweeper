@@ -97,7 +97,7 @@ fun setBestTimesPagerAdapter(pager: ViewPager2, viewModel: HighScoresViewModel) 
 }
 
 @BindingAdapter("setPagerData")
-fun setPagerData(pager: ViewPager2, bestTimes: MutableList<HighScore>) {
+fun setPagerData(pager: ViewPager2, bestTimes: MutableMap<Difficulty, List<HighScore>>) {
     (pager.adapter as? BestTimesPagerAdapter)?.let { adapter ->
         adapter.bestTimes = bestTimes
     }

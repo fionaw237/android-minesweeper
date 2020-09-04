@@ -13,7 +13,7 @@ import com.example.android_minesweeper.view_models.HighScoresViewModel
 
 class BestTimesPagerAdapter constructor(val viewModel: HighScoresViewModel): RecyclerView.Adapter<BestTimesPagerAdapter.PageViewHolder>() {
 
-    var bestTimes: MutableList<HighScore> = mutableListOf()
+    var bestTimes: MutableMap<Difficulty, List<HighScore>> = mutableMapOf()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -30,7 +30,7 @@ class BestTimesPagerAdapter constructor(val viewModel: HighScoresViewModel): Rec
 
     override fun onBindViewHolder(holder: PageViewHolder, position: Int) {
         holder.binding.viewModel = viewModel
-        holder.binding.highScores = bestTimes
+        holder.binding.highScores = bestTimes[viewModel.difficultyForAdapterPosition(position)] ?: listOf<HighScore>()
     }
 
     override fun getItemCount() = Difficulty.values().count()
