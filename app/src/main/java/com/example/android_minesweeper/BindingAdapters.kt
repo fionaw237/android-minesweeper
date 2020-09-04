@@ -82,11 +82,24 @@ fun setUpHighScoresRecyclerViewAdapter(recyclerView: RecyclerView, highScoresVie
 }
 
 @BindingAdapter("highScores")
-fun setHighScoresData(recyclerView: RecyclerView, highScores: List<HighScore>) {
-    (recyclerView.adapter as HighScoresAdapter).data = highScores
+fun <T> setHighScoresData(recyclerView: RecyclerView, highScores: List<T>) {
+    (recyclerView.adapter as? HighScoresAdapter)?.let { adapter ->
+        (highScores as? List<HighScore>)?.let { scores ->
+            adapter.data = scores
+            adapter.notifyDataSetChanged()
+        }
+    }
 }
 
 @BindingAdapter("setBestTimesPagerAdapter")
 fun setBestTimesPagerAdapter(pager: ViewPager2, viewModel: HighScoresViewModel) {
     pager.adapter = BestTimesPagerAdapter(viewModel)
+}
+
+@BindingAdapter("setPagerData")
+fun setPagerData(pager: ViewPager2, bestTimes: MutableList<HighScore>) {
+    (pager.adapter as? BestTimesPagerAdapter)?.let { adapter ->
+        adapter.bestTimes = bestTimes
+        adapter.notifyDataSetChanged()
+    }
 }

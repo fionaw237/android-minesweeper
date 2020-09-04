@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android_minesweeper.Difficulty
 import com.example.android_minesweeper.R
@@ -14,26 +15,31 @@ import kotlinx.android.synthetic.main.best_times_page.view.*
 
 class BestTimesPagerAdapter constructor(val viewModel: HighScoresViewModel): RecyclerView.Adapter<BestTimesPagerAdapter.PageViewHolder>() {
 
-    val bestTimes: MutableMap<Difficulty, MutableList<HighScore>> = mutableMapOf()
+    var bestTimes: MutableList<HighScore> = mutableListOf()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): BestTimesPagerAdapter.PageViewHolder {
-        return PageViewHolder(
-            DataBindingUtil.inflate<BestTimesPageBinding>(LayoutInflater.from(parent.context), R.layout.best_times_page, parent, false)
-        )
+    ): PageViewHolder {
+        DataBindingUtil.inflate<BestTimesPageBinding>(LayoutInflater.from(parent.context), R.layout.best_times_page, parent, false).apply {
+            bestTimesRecyclerView.adapter =  HighScoresAdapter()
+            bestTimesRecyclerView.layoutManager = LinearLayoutManager(bestTimesRecyclerView.context)
+            return PageViewHolder(this)
+        }
+
     }
 
-    override fun onBindViewHolder(holder: BestTimesPagerAdapter.PageViewHolder, position: Int) {
-//        holder.binding.highScores = bestTimes[position]
+    override fun onBindViewHolder(holder: PageViewHolder, position: Int) {
+        holder.binding.viewModel = viewModel
+        holder.binding.highScores = bestTimes
+        holder.binding.executePendingBindings()
     }
 
     override fun getItemCount() = 3
 
     class PageViewHolder(val view: View): RecyclerView.ViewHolder(view) {
         lateinit var binding: BestTimesPageBinding
-        var recyclerView: RecyclerView = view.best_times_recycler_view
+//        var recyclerView: RecyclerView = view.best_times_recycler_view
 
         constructor(binding: BestTimesPageBinding) : this(binding.root) {
             this.binding = binding
