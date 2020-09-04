@@ -10,8 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.android_minesweeper.screens.game.GameBoardAdapter
 import com.example.android_minesweeper.view_models.GameViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.ViewPager2
 import com.example.android_minesweeper.models.HighScore
 import com.example.android_minesweeper.models.GridCell
+import com.example.android_minesweeper.screens.best_times.BestTimesPagerAdapter
 import com.example.android_minesweeper.screens.best_times.HighScoresAdapter
 import com.example.android_minesweeper.view_models.HighScoresViewModel
 
@@ -82,4 +84,9 @@ fun setUpHighScoresRecyclerViewAdapter(recyclerView: RecyclerView, highScoresVie
 @BindingAdapter("highScores")
 fun setHighScoresData(recyclerView: RecyclerView, highScores: List<HighScore>) {
     (recyclerView.adapter as HighScoresAdapter).data = highScores
+}
+
+@BindingAdapter("setBestTimesPagerAdapter")
+fun setBestTimesPagerAdapter(pager: ViewPager2, viewModel: HighScoresViewModel) {
+    pager.adapter = BestTimesPagerAdapter(viewModel)
 }
