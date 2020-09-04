@@ -13,10 +13,10 @@ import com.example.android_minesweeper.models.HighScoreDisplay
 class HighScoresAdapter() : RecyclerView.Adapter<HighScoreViewHolder>() {
 
     var data = listOf<HighScore>()
-    set(value) {
-        field = value
-        notifyDataSetChanged()
-    }
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HighScoreViewHolder {
         return HighScoreViewHolder(
