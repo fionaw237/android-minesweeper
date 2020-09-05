@@ -1,4 +1,4 @@
-package com.example.android_minesweeper.database
+package com.example.android_minesweeper.models
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -16,5 +16,5 @@ data class HighScore(
     var name: String = "",
 
     @ColumnInfo(name = "time")
-    var time: String = "0"
+    var time: Long = 0L
 )

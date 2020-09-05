@@ -1,18 +1,19 @@
-package com.example.android_minesweeper.screens.game
+package com.example.android_minesweeper.view_models
 
 import androidx.databinding.Bindable
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.MutableLiveData
+import com.example.android_minesweeper.*
 import com.example.android_minesweeper.models.GridCell
-import com.example.android_minesweeper.Difficulty
-import com.example.android_minesweeper.FlagAction
-import com.example.android_minesweeper.GameState
-import com.example.android_minesweeper.UILiveDataResponse
-import com.example.android_minesweeper.screens.BaseViewModel
+import com.example.android_minesweeper.models.HighScore
+import com.example.android_minesweeper.models.HighScoreDao
+import com.example.android_minesweeper.models.HighScoresRepository
+import kotlinx.coroutines.*
 
-class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
+class GameViewModel(private val difficulty: Difficulty, highScoreDao: HighScoreDao) : BaseViewModel() {
 
     var responseLiveData = MutableLiveData<UILiveDataResponse>()
+    private val highScoresRepository = HighScoresRepository(highScoreDao)
 
     var numberOfMines: Int = 0
         set(value) {
@@ -51,6 +52,10 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
         setUpGame()
     }
 
+    fun doneNavigating() {
+        responseLiveData.value = null
+    }
+
     private fun setUpGame() {
         timerStarted = false
         gameTime = 0L
@@ -62,7 +67,7 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
         numberOfMines = when (difficulty) {
             Difficulty.BEGINNER -> 5
             Difficulty.INTERMEDIATE -> 8
-            Difficulty.ADVANCED -> 12
+            Difficulty.ADVANCED -> 2
         }
     }
 
@@ -249,7 +254,7 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
         gameState = GameState.WON
         disableCellInteraction()
         responseLiveData.value = UILiveDataResponse.StopTimer
-        responseLiveData.value = UILiveDataResponse.ShowGameWonMessage
+        responseLiveData.value = UILiveDataResponse.ShowGameWonMessage(gameTime.convertMillisecondsToMinutesAndSecondsString())
     }
 
     private fun disableCellInteraction() {
@@ -257,4 +262,16 @@ class GameViewModel(private val difficulty: Difficulty) : BaseViewModel() {
             cell.disable()
         }
     }
+
+    fun gameWonAlertButtonPressed(enteredName: String?) {
+        enteredName?.let { name ->
+            highScoresRepository.storeNewHighScore(HighScore(name = name, time = gameTime, difficulty = difficulty.value))
+            responseLiveData.value = UILiveDataResponse.NavigateToHighScores(difficulty, null)
+        }
+    }
+
+    fun checkForNewBestTime(): Boolean = runBlocking {
+             highScoresRepository.isNewBestTime(gameTime, difficulty)
+    }
+
 }

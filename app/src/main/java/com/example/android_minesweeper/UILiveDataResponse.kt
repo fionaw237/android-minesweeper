@@ -1,12 +1,13 @@
 package com.example.android_minesweeper
 
-sealed class UILiveDataResponse {
+import com.example.android_minesweeper.models.HighScore
 
-    object NavigateToHighScores : UILiveDataResponse()
+sealed class UILiveDataResponse {
     object StartTimer : UILiveDataResponse()
     object StopTimer : UILiveDataResponse()
     object ResetTimer : UILiveDataResponse()
-    object ShowGameWonMessage : UILiveDataResponse()
     object ShowNoFlagsMessage : UILiveDataResponse()
     data class NavigateToGameScreen(val difficulty: Difficulty) : UILiveDataResponse()
+    data class NavigateToHighScores(val difficulty: Difficulty, val newHighScore: HighScore? = null) : UILiveDataResponse()
+    data class ShowGameWonMessage(val time: String) : UILiveDataResponse()
 }

@@ -1,4 +1,4 @@
-package com.example.android_minesweeper.screens
+package com.example.android_minesweeper.view_models
 
 import androidx.databinding.Observable
 import androidx.databinding.PropertyChangeRegistry

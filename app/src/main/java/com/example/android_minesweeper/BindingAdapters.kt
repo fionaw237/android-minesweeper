@@ -8,12 +8,16 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android_minesweeper.screens.game.GameBoardAdapter
-import com.example.android_minesweeper.screens.game.GameViewModel
+import com.example.android_minesweeper.view_models.GameViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.android_minesweeper.database.HighScore
+import androidx.viewpager2.widget.ViewPager2
+import com.example.android_minesweeper.models.HighScore
 import com.example.android_minesweeper.models.GridCell
+import com.example.android_minesweeper.screens.best_times.BestTimesPagerAdapter
 import com.example.android_minesweeper.screens.best_times.HighScoresAdapter
-import com.example.android_minesweeper.screens.best_times.HighScoresViewModel
+import com.example.android_minesweeper.view_models.HighScoresViewModel
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
 // ----- Data binding for game grid -----
 
@@ -79,7 +83,43 @@ fun setUpHighScoresRecyclerViewAdapter(recyclerView: RecyclerView, highScoresVie
     }
 }
 
+@Suppress("UNCHECKED_CAST")
 @BindingAdapter("highScores")
-fun setHighScoresData(recyclerView: RecyclerView, highScores: List<HighScore>) {
-    (recyclerView.adapter as HighScoresAdapter).data = highScores
+fun <T> setHighScoresData(recyclerView: RecyclerView, highScores: List<T>) {
+    (recyclerView.adapter as? HighScoresAdapter)?.let { adapter ->
+        (highScores as? List<HighScore>)?.let { scores ->
+            adapter.data = scores
+        }
+    }
+}
+
+@BindingAdapter("setBestTimesPagerAdapter")
+fun setBestTimesPagerAdapter(pager: ViewPager2, viewModel: HighScoresViewModel) {
+    pager.adapter = BestTimesPagerAdapter(viewModel)
+}
+
+@BindingAdapter("setPagerData")
+fun setPagerData(pager: ViewPager2, bestTimes: MutableMap<Difficulty, List<HighScore>>) {
+    (pager.adapter as? BestTimesPagerAdapter)?.let { adapter ->
+        adapter.bestTimes = bestTimes
+    }
+}
+
+@BindingAdapter("defaultPage")
+fun setDefaultPage(pager: ViewPager2, difficulty: Difficulty) {
+    pager.setCurrentItem(
+        when (difficulty) {
+            Difficulty.BEGINNER -> 0
+            Difficulty.INTERMEDIATE -> 1
+            else -> 2
+        },
+        false
+    )
+}
+
+@BindingAdapter("tabsForBestTimes", "highScoresViewModel")
+fun setUpTabMediatorForBestTimes(pager: ViewPager2, tabLayout: TabLayout, viewModel: HighScoresViewModel) {
+    TabLayoutMediator(tabLayout, pager) { tab, position ->
+        tab.text = viewModel.difficultyForAdapterPosition(position).value
+    }.attach()
 }

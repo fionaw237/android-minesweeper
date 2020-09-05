@@ -9,11 +9,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.example.android_minesweeper.Difficulty
 import com.example.android_minesweeper.R
 import com.example.android_minesweeper.UILiveDataResponse
 import com.example.android_minesweeper.databinding.WelcomeScreenBinding
+import com.example.android_minesweeper.view_models.WelcomeScreenViewModel
 
 class WelcomeScreenFragment : Fragment() {
 
@@ -36,7 +37,7 @@ class WelcomeScreenFragment : Fragment() {
                     if (result is UILiveDataResponse.NavigateToGameScreen) {
                         WelcomeScreenFragmentDirections.actionWelcomeScreenFragmentToGameScreenFragment(result.difficulty)
                     } else {
-                        WelcomeScreenFragmentDirections.actionWelcomeScreenFragmentToBestTimesFragment()
+                        WelcomeScreenFragmentDirections.actionWelcomeScreenFragmentToBestTimesFragment(Difficulty.BEGINNER)
                     }
                 )
                 viewModel.doneNavigating()

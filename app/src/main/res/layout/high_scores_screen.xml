@@ -5,7 +5,7 @@
     <data>
         <variable
             name="highScoresViewModel"
-            type="com.example.android_minesweeper.screens.best_times.HighScoresViewModel" />
+            type="com.example.android_minesweeper.view_models.HighScoresViewModel" />
         <import type="com.example.android_minesweeper.Difficulty"/>
     </data>
 
@@ -27,37 +27,18 @@
             app:tabIndicatorColor="@android:color/white"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/beginner"/>
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/intermediate"/>
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/advanced"/>
-
-        </com.google.android.material.tabs.TabLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/best_times_recycler_view"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            app:highScoresAdapter="@{highScoresViewModel}"
-            app:highScores="@{highScoresViewModel.highScores}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+        <androidx.viewpager2.widget.ViewPager2
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:setBestTimesPagerAdapter="@{highScoresViewModel}"
+            app:setPagerData="@{highScoresViewModel.highScores}"
+            app:defaultPage="@{highScoresViewModel.defaultDifficulty}"
+            app:tabsForBestTimes="@{difficultySelector}"
+            app:highScoresViewModel="@{highScoresViewModel}"
             app:layout_constraintTop_toBottomOf="@id/difficulty_selector"
-            />
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

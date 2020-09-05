@@ -3,9 +3,9 @@ package com.example.android_minesweeper
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.example.android_minesweeper.database.AppDatabase
-import com.example.android_minesweeper.database.HighScore
-import com.example.android_minesweeper.database.HighScoreDao
+import com.example.android_minesweeper.models.AppDatabase
+import com.example.android_minesweeper.models.HighScore
+import com.example.android_minesweeper.models.HighScoreDao
 import org.junit.Assert.assertEquals
 import org.junit.After
 import org.junit.Before

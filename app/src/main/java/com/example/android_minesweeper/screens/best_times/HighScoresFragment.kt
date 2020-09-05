@@ -1,19 +1,18 @@
 package com.example.android_minesweeper.screens.best_times
 
+import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.android_minesweeper.R
-import com.example.android_minesweeper.database.AppDatabase
+import com.example.android_minesweeper.databinding.ConfirmDeleteAlertBinding
+import com.example.android_minesweeper.models.AppDatabase
 import com.example.android_minesweeper.databinding.HighScoresScreenBinding
-import com.example.android_minesweeper.getDifficultyEnum
+import com.example.android_minesweeper.view_models.HighScoresViewModel
 
 class HighScoresFragment : Fragment() {
 
@@ -21,45 +20,67 @@ class HighScoresFragment : Fragment() {
     private lateinit var viewModel: HighScoresViewModel
     private lateinit var viewModelFactory: HighScoresViewModelFactory
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    @SuppressLint("RestrictedApi")
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
 
         (activity as? AppCompatActivity)?.supportActionBar?.setShowHideAnimationEnabled(false)
         (activity as? AppCompatActivity)?.supportActionBar?.show()
 
         binding = DataBindingUtil.inflate(inflater, R.layout.high_scores_screen, container, false)
-//        setUpDifficultySpinner()
 
-//        binding.difficultySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//            override fun onNothingSelected(parent: AdapterView<*>?) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//            }
-//
-//            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-//                parent?.getItemAtPosition(position)?.toString()?.getDifficultyEnum()?.let { difficulty ->
-//                    viewModel.difficultyChosenToDisplay(difficulty)
-//                }
-//            }
-//
-//        }
-
-        val dataSource = AppDatabase.getInstance(requireNotNull(this.activity).application).highScoreDao
+        val dataSource =
+            AppDatabase.getInstance(requireNotNull(this.activity).application).highScoreDao
         viewModelFactory = HighScoresViewModelFactory(dataSource)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(HighScoresViewModel::class.java)
+        viewModel =
+            ViewModelProviders.of(this, viewModelFactory).get(HighScoresViewModel::class.java)
         binding.highScoresViewModel = viewModel
         binding.lifecycleOwner = this
+
+        viewModel.defaultDifficulty = HighScoresFragmentArgs.fromBundle(arguments!!).difficulty
+        viewModel.getBestTimes()
+
         return binding.root
     }
 
-//    private fun setUpDifficultySpinner() {
-//        context?.let { context ->
-//            ArrayAdapter.createFromResource(
-//                context,
-//                R.array.difficulties,
-//                android.R.layout.simple_spinner_item
-//            ).also { adapter ->
-//                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//                binding.difficultySpinner.adapter = adapter
-//            }
-//        }
-//    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.delete_best_times, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.delete_best_times_button) {
+
+            DataBindingUtil.inflate<ConfirmDeleteAlertBinding>(
+                layoutInflater,
+                R.layout.confirm_delete_alert,
+                view as? ViewGroup,
+                false
+            ).also { binding ->
+                AlertDialog.Builder(context).create().also { dialog ->
+                    dialog.setView(binding.root)
+                    dialog.setCancelable(false)
+                    dialog.show()
+
+                    binding.cancelDeleteButton.setOnClickListener {
+                        dialog.cancel()
+                    }
+                    binding.confirmDeleteButton.setOnClickListener {
+                        dialog.cancel()
+                        viewModel.deleteBestTimesButtonPressed()
+                    }
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 }

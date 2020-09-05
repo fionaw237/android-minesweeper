@@ -1,0 +1,55 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/backgroundGrey">
+
+        <TextView
+            android:id="@+id/delete_alert_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:text="@string/delete_confirmation"
+            android:textColor="@color/teal"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/cancel_delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:padding="20dp"
+            android:text="@string/cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/teal"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@id/delete_alert_title"
+            app:layout_constraintTop_toBottomOf="@id/delete_alert_title" />
+
+        <Button
+            android:id="@+id/confirm_delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:padding="20dp"
+            android:text="@string/reset_all"
+            android:textAllCaps="false"
+            android:textColor="@color/teal"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@id/delete_alert_title"
+            app:layout_constraintTop_toTopOf="@id/cancel_delete_button" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
+
+

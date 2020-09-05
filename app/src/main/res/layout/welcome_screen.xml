@@ -6,7 +6,7 @@
     <data>
         <variable
             name="welcomeScreenViewModel"
-            type="com.example.android_minesweeper.screens.welcome.WelcomeScreenViewModel" />
+            type="com.example.android_minesweeper.view_models.WelcomeScreenViewModel" />
 
         <import type="com.example.android_minesweeper.Difficulty"/>
     </data>

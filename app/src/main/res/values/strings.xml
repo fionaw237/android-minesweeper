@@ -9,4 +9,11 @@
     <string name="beginner">Beginner</string>
     <string name="intermediate">Intermediate</string>
     <string name="advanced">Advanced</string>
+    <string name="best_time_input_hint">Enter your name</string>
+    <string name="new_best_time_message">"New best time!"</string>
+    <string name="you_won_message">You won!</string>
+    <string name="submit">Submit</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete_confirmation">Are you sure you want to reset all best times?</string>
 </resources>

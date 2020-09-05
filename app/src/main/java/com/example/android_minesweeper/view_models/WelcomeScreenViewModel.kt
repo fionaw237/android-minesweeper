@@ -1,4 +1,4 @@
-package com.example.android_minesweeper.screens.welcome
+package com.example.android_minesweeper.view_models
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,7 +14,7 @@ class WelcomeScreenViewModel : ViewModel() {
     }
 
     fun highScoresButtonPressed() {
-        responseLiveData.value = UILiveDataResponse.NavigateToHighScores
+        responseLiveData.value = UILiveDataResponse.NavigateToHighScores(Difficulty.BEGINNER, null)
     }
 
     fun difficultySelected(difficulty: Difficulty) {
