@@ -14,7 +14,7 @@ class WelcomeScreenViewModel : ViewModel() {
     }
 
     fun highScoresButtonPressed() {
-        responseLiveData.value = UILiveDataResponse.NavigateToHighScores(Difficulty.BEGINNER, null)
+        responseLiveData.value = UILiveDataResponse.NavigateToHighScores(Difficulty.BEGINNER)
     }
 
     fun difficultySelected(difficulty: Difficulty) {

@@ -15,7 +15,7 @@ class GameViewModel(private val difficulty: Difficulty, highScoreDao: HighScoreD
     var responseLiveData = MutableLiveData<UILiveDataResponse>()
     private val highScoresRepository = HighScoresRepository(highScoreDao)
 
-    var numberOfMines: Int = 0
+    private var numberOfMines: Int = 0
         set(value) {
             field = value
             flagsRemaining = value.toString()
@@ -72,7 +72,7 @@ class GameViewModel(private val difficulty: Difficulty, highScoreDao: HighScoreD
     }
 
     private fun randomMinePositions(gridCellTapped: GridCell): Set<Pair<Int, Int>> {
-        var positions = mutableSetOf<Pair<Int, Int>>()
+        val positions = mutableSetOf<Pair<Int, Int>>()
         while (positions.size < numberOfMines) {
             val randomRow = (0 until numberOfRows).random()
             val randomColumn = (0 until cellsPerRow).random()
@@ -137,7 +137,7 @@ class GameViewModel(private val difficulty: Difficulty, highScoreDao: HighScoreD
     }
 
     private fun getSurroundingCells(cell: GridCell): List<GridCell> {
-        var surroundingCells: MutableList<GridCell> = mutableListOf()
+        val surroundingCells: MutableList<GridCell> = mutableListOf()
         ( (cell.indexPath.first - 1)..(cell.indexPath.first + 1) ).forEach { row ->
             ( (cell.indexPath.second - 1)..(cell.indexPath.second + 1) ).forEach { column ->
                 if (!isOutOfBounds(Pair(row, column)) && !isAtSelectedCell(selectedCell = cell, indexPath = Pair(row, column))) {
@@ -163,7 +163,7 @@ class GameViewModel(private val difficulty: Difficulty, highScoreDao: HighScoreD
     }
 
     private fun revealSurroundingCellsWithZeroMines(cell: GridCell) {
-        var cellsChecked = mutableSetOf(cell)
+        val cellsChecked = mutableSetOf(cell)
         var cellsWithZeroMinesInVicinity = mutableSetOf(cell)
 
         while (cellsWithZeroMinesInVicinity.isNotEmpty()) {
@@ -203,7 +203,6 @@ class GameViewModel(private val difficulty: Difficulty, highScoreDao: HighScoreD
         configureCellsForGameOver()
         responseLiveData.value = UILiveDataResponse.StopTimer
         // play sound
-        // configure reset button
         refreshGridCells(gridCells)
     }
 
@@ -266,7 +265,7 @@ class GameViewModel(private val difficulty: Difficulty, highScoreDao: HighScoreD
     fun gameWonAlertButtonPressed(enteredName: String?) {
         enteredName?.let { name ->
             highScoresRepository.storeNewHighScore(HighScore(name = name, time = gameTime, difficulty = difficulty.value))
-            responseLiveData.value = UILiveDataResponse.NavigateToHighScores(difficulty, null)
+            responseLiveData.value = UILiveDataResponse.NavigateToHighScores(difficulty)
         }
     }
 
