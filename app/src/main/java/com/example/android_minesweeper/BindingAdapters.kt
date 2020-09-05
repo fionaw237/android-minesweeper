@@ -16,6 +16,8 @@ import com.example.android_minesweeper.models.GridCell
 import com.example.android_minesweeper.screens.best_times.BestTimesPagerAdapter
 import com.example.android_minesweeper.screens.best_times.HighScoresAdapter
 import com.example.android_minesweeper.view_models.HighScoresViewModel
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
 // ----- Data binding for game grid -----
 
@@ -113,4 +115,11 @@ fun setDefaultPage(pager: ViewPager2, difficulty: Difficulty) {
         },
         false
     )
+}
+
+@BindingAdapter("tabsForBestTimes", "highScoresViewModel")
+fun setUpTabMediatorForBestTimes(pager: ViewPager2, tabLayout: TabLayout, viewModel: HighScoresViewModel) {
+    TabLayoutMediator(tabLayout, pager) { tab, position ->
+        tab.text = viewModel.difficultyForAdapterPosition(position).value
+    }.attach()
 }

@@ -12,7 +12,6 @@ import com.example.android_minesweeper.R
 import com.example.android_minesweeper.databinding.ConfirmDeleteAlertBinding
 import com.example.android_minesweeper.models.AppDatabase
 import com.example.android_minesweeper.databinding.HighScoresScreenBinding
-import com.example.android_minesweeper.screens.game.GameScreenFragmentArgs
 import com.example.android_minesweeper.view_models.HighScoresViewModel
 
 class HighScoresFragment : Fragment() {
