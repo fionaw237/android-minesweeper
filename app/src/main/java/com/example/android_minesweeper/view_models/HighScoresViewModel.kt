@@ -33,6 +33,7 @@ class HighScoresViewModel(highScoreDao: HighScoreDao) : BaseViewModel() {
         uiScope.launch {
             highScoresRepository.deleteScores()
             highScores = mutableMapOf()
+            notifyPropertyChanged(BR.highScores)
         }
     }
 
